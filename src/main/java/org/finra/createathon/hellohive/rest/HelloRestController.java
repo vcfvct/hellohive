@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloRestController
 {
     @Autowired
-    QueryService hiveDao;
+    QueryService queryService;
 
     @RequestMapping(value = "/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, String> index() {
@@ -37,7 +37,7 @@ public class HelloRestController
         response.setContentType("text/csv");
         response.setHeader("Content-disposition", "attachment; filename=" + finalFileName);
 
-        hiveDao.handleHql(hql, response.getWriter());
+        queryService.handleHql(hql, response.getWriter());
     }
 
 }
