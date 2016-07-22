@@ -1,21 +1,21 @@
 package org.finra.createathon.hellohive.service;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Base64;
+
+import javax.sql.DataSource;
 
 import org.finra.createathon.hellohive.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -27,7 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class HiveConnectionTest
 {
     @Autowired
-    private Environment env;
+    @Qualifier("hiveDataSource")
+    private DataSource hiveDs;
 
     @Test
     public void testRawJdbcSql() throws SQLException
@@ -40,14 +41,9 @@ public class HiveConnectionTest
 
         String hiveSql = "desc mrp.QMRC011_SPRVN_DTL_PRC_TXT";
 
-        verifyDrivers();
         Instant start = Instant.now();
 
-        String dbUrl = env.getProperty("db.url");
-        String user = env.getProperty("db.username");
-        String pw = new String(Base64.getDecoder().decode(env.getProperty("db.password.md5")));
-
-        try (Connection hiveCon = DriverManager.getConnection(dbUrl, user, pw);
+        try (Connection hiveCon = hiveDs.getConnection();
              Statement hiveStmt = hiveCon.createStatement();
              ResultSet hiveRes = hiveStmt.executeQuery(hiveSql))
         {
@@ -73,18 +69,4 @@ public class HiveConnectionTest
             System.out.println("Execution took: " + Duration.between(start, end));
         }
     }
-
-    private void verifyDrivers()
-    {
-        String driverName = env.getProperty("db.driver");
-        try
-        {
-            Class.forName(driverName);
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-            System.exit(1);
-        }
-    }
-
 }
