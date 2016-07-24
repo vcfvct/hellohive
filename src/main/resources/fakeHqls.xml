@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+   <properties>
+   <entry key="show-dbs">
+      show databases
+   </entry>
+   <entry key="show-tables">
+      show tables in mrp
+   </entry>
+   <entry key="desc">
+      desc mrp.${table}
+   </entry>
+   <entry key="explain">
+      explain ${query}
+   </entry>
+   <entry key="xm-select-10">
+      select * from mrp.QMRC011_SPRVN_SM_prc_txt where begindate='${begindate}' limit 10
+   </entry>
+</properties>
