@@ -1,0 +1,23 @@
+<html>
+<head>
+</head>
+<body ng-app="helloHive">
+<h2>Hello HIve!</h2>
+<div ng-controller="mainCtrl">
+    <div ng-repeat="(name, hql) in hqls">
+        <b>{{name}}</b> -> {{hql}}
+    </div>
+</div>
+</body>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+<script>
+    var app = angular.module("helloHive", []);
+    app.controller("mainCtrl", ['$scope', '$http', function ($scope, $http) {
+        $http.get('/rest/hql/all').then(
+                function success(res) {
+                    $scope.hqls = res.data;
+                });
+    }]);
+</script>
+</html>
