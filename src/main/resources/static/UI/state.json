@@ -1,0 +1,26 @@
+{
+	"table": [
+		{
+			"name":"table 1",
+			"columns": [
+				{
+					"name":"column 1",
+					"selected": true
+				}
+			],
+			"selected":true
+		}
+	],
+
+	"query": {
+		"selected_table":["table 1"],
+		"selected_column":["column 1"],
+		"filters": ["column 1"]
+	},
+
+	"results": [
+		{
+			"..."
+		}
+	]
+}
