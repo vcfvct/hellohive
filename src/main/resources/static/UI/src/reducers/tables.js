@@ -1,3 +1,5 @@
+import {TOGGLE_TABLE, APP_INIT} from '../actions';
+
 const initState = [
 	{
 		name: 'TABLE_1', show: true, abbrev: 't1',
@@ -15,7 +17,7 @@ const initState = [
 
 export function tables(state = initState, action) {
 	switch (action.type) {
-		case 'TOGGLE_TABLE':
+		case TOGGLE_TABLE:
 			state.map(table => {
 				if (table.name === action.table) {
 					table.show = true
@@ -42,6 +44,7 @@ export function tables(state = initState, action) {
 			return Object.assign([], state)
 
 		case 'TOGGLE_FILTER':
+		{
 			state.map(table => {
 				if (table.name === action.table) {
 					table.columns.map(column => {
@@ -53,8 +56,13 @@ export function tables(state = initState, action) {
 						}
 					})
 				}
-			})
-			return Object.assign([], state)
+			});
+			return Object.assign([], state);
+		}
+
+		case APP_INIT : {
+			return action.tables;
+		}
 
 		default:
 			return state

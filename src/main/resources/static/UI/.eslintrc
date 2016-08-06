@@ -19,6 +19,7 @@
   "plugins": [
     "react"
   ],
+  // to reset rules: https://gist.github.com/cletusw/e01a85e399ab563b1236
   "rules": {
     // Disable `no-console` rule
     "no-console": 0,
@@ -26,6 +27,7 @@
     "no-underscore-dangle": 1,
     // Default to single quotes and raise an error if something
     // else is used
-    "quotes": [2, "single"]
+    "quotes": [2, "single"],
+    "no-mixed-spaces-and-tabs": 0
   }
 }

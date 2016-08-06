@@ -1,9 +1,10 @@
 module.exports = {
-  entry: {
+  entry:  {
     createathon:'./src/index.js'
   },
   output: {
-    filename: './dist/[name].bundle.js'
+      path: __dirname + '/dist',
+    filename: '[name].bundle.js'
   },
   devtool: 'source-map',
   module: {
@@ -17,5 +18,15 @@ module.exports = {
         query: { presets: [ 'es2015', 'react' ] }
       }
     ]
-  }
+  },
+    devServer: {
+        port:8090,
+        proxy: {
+            //route dev-server which is on 8090 requests to the 8080 where backend server runs
+            '/rest/*': {
+                target: 'http://localhost:8080',
+                secure: false
+            }
+        }
+    }
 };
