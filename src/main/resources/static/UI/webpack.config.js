@@ -1,19 +1,14 @@
 module.exports = {
   entry: {
-    "createathon":"./src/index.js"
+    createathon:'./src/index.js'
   },
   output: {
-    filename: "./dist/[name].bundle.js"
+    filename: './dist/[name].bundle.js'
   },
   devtool: 'source-map',
   module: {
-	  preLoaders: [
-		  {
-			  test: /\.js$/,
-			  exclude: /node_modules/,
-			  loader: 'jshint-loader'
-		  }
-	  ],
+   preLoaders: [{test: /\.jsx$/, exclude: /node_modules/, loader: 'eslint-loader'
+   }],
     loaders: [
       {
         test: /\.js$/,
