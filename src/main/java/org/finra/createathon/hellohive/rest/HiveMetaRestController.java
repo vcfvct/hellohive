@@ -1,6 +1,7 @@
 package org.finra.createathon.hellohive.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.finra.createathon.hellohive.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ public class HiveMetaRestController
     {
         return queryService.allTables();
     }
+
     @RequestMapping(value = "/table/{tableName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<String> getColumnNamesByTable(@PathVariable("tableName") String tableName)
+    public Map<String, String> getColumnNamesByTable(@PathVariable("tableName") String tableName)
     {
         return queryService.fetchColumnsByTable(tableName);
     }

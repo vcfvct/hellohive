@@ -28,6 +28,8 @@
     // Default to single quotes and raise an error if something
     // else is used
     "quotes": [2, "single"],
-    "no-mixed-spaces-and-tabs": 0
+    "no-mixed-spaces-and-tabs": 0,
+    //disable react PropTypes validation check
+    "prop-types": [0]
   }
 }

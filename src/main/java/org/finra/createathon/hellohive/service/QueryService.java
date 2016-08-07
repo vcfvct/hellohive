@@ -2,6 +2,7 @@ package org.finra.createathon.hellohive.service;
 
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: Han Li
@@ -13,5 +14,5 @@ public interface QueryService
 
     List<String> allTables();
 
-    List<String> fetchColumnsByTable(String tableName);
+    Map<String, String> fetchColumnsByTable(String tableName);
 }

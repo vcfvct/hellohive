@@ -1,11 +1,11 @@
 package org.finra.createathon.hellohive.service.impl;
 
 import java.io.PrintWriter;
-import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.finra.createathon.hellohive.common.Const;
 import org.finra.createathon.hellohive.service.QueryService;
@@ -29,7 +29,7 @@ public class QueryServiceImpl implements QueryService
     @Override
     public int handleHql(String hql, PrintWriter writer)
     {
-       return hiveJdbcTemplate.query(hql, rs -> {
+        return hiveJdbcTemplate.query(hql, rs -> {
             int rowCount = 0;
             final ResultSetMetaData rsmd = rs.getMetaData();
             final int columnCount = rsmd.getColumnCount();
@@ -79,30 +79,38 @@ public class QueryServiceImpl implements QueryService
     public List<String> allTables()
     {
         String sql = "show tables in mrp";
-        return hiveJdbcTemplate.query(sql, this::getStringsFromRs);
+        return hiveJdbcTemplate.query(sql, rs -> {
+            List<String> columns = new ArrayList<>();
+            while (rs.next())
+            {
+                String col = rs.getString(1);
+                columns.add(col);
+            }
+            return columns;
+        });
     }
 
     @Override
-    public List<String> fetchColumnsByTable(String tableName)
+    public Map<String, String> fetchColumnsByTable(String tableName)
     {
         String sql = "desc mrp." + tableName;
-        return hiveJdbcTemplate.query(sql, this::getStringsFromRs);
-    }
 
-    private List<String> getStringsFromRs(ResultSet rs) throws SQLException
-    {
-        List<String> columns = new ArrayList<>();
-        while (rs.next())
-        {
-            String col = rs.getString(1);
-            if(StringUtils.isEmpty(col))
+        return hiveJdbcTemplate.query(sql, rs -> {
+            Map<String, String> columns = new HashMap<>();
+            while (rs.next())
             {
-                break;
-            }else
-            {
-                columns.add(col);
+                String colName = rs.getString(1);
+                String colType = rs.getString(2);
+                if (StringUtils.isEmpty(colName))
+                {
+                    break;
+                }
+                else
+                {
+                    columns.put(colName, colType);
+                }
             }
-        }
-        return columns;
+            return columns;
+        });
     }
 }
