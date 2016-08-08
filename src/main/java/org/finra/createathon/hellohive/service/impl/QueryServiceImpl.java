@@ -1,5 +1,7 @@
 package org.finra.createathon.hellohive.service.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
@@ -7,13 +9,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.finra.createathon.hellohive.common.Const;
+import org.finra.createathon.hellohive.common.MailSender;
+import org.finra.createathon.hellohive.model.QueryWrapper;
 import org.finra.createathon.hellohive.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * User: Han Li
@@ -25,6 +33,9 @@ public class QueryServiceImpl implements QueryService
     @Autowired
     @Qualifier("hiveJdbcTemplate")
     JdbcTemplate hiveJdbcTemplate;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public int handleHql(String hql, PrintWriter writer)
@@ -112,5 +123,33 @@ public class QueryServiceImpl implements QueryService
             }
             return columns;
         });
+    }
+
+    @Async
+    @Override
+    public void asyncQueryHandler(QueryWrapper queryWrapper)
+    {
+        //1.execute
+        File file = new File("/tmp/" + queryWrapper.getQueryId());
+        String senderEmail = "han.li@finra.org";
+        try
+        {
+            PrintWriter printWriter = new PrintWriter(file);
+            handleHql(queryWrapper.getSql(), printWriter);
+            String emailSubject = "Hive query File ready";
+            String emailBody = "File is ready";
+            if (!StringUtils.isEmpty(queryWrapper.getNotifyEmail()))
+            {
+                MailSender mailSender = new MailSender();
+                mailSender.sendEmail(senderEmail, queryWrapper.getNotifyEmail(), emailSubject, emailBody);
+            }
+            if(!StringUtils.isEmpty(queryWrapper.getNotifyUrl()))
+            {
+                restTemplate.getForEntity(queryWrapper.getNotifyUrl(), String.class);
+            }
+        } catch (FileNotFoundException | MessagingException e)
+        {
+            e.printStackTrace();
+        }
     }
 }
