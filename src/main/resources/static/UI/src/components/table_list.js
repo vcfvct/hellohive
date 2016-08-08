@@ -1,13 +1,15 @@
 import React from 'react'
-import Table from './table'
+import Table from './table';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 const TableList = ({tables, onTableClick, onColumnClick, onFilterClick}) => (
 		<div>
-			<select onChange={(e) => onTableClick(e.target.value)}>
+			<SelectField onChange={(e) => onTableClick(e.target.value)}>
 				{tables.map(table =>
-						<option key={table.name}> {table.name} </option>
+						<MenuItem key={table.name} value={table.name} primaryText={table.name} />
 				)}
-			</select>
+			</SelectField>
 
 			{tables.map(table =>
 					<div key={table.name}>

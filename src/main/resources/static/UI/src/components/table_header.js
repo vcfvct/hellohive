@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-const TableHeader = () => (
+const TableHeaderContent = () => (
 	<tr>
 		<td width="50%">Column</td>
 		<td width="30%">Type</td>
@@ -8,4 +8,4 @@ const TableHeader = () => (
 	</tr>
 )
 
-export default TableHeader
+export default TableHeaderContent
