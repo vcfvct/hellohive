@@ -5,8 +5,10 @@
  * Time: 5:07 PM
  */
 export default class HomeController {
-	constructor($http) {
+	constructor($scope ,$http, $uibModal) {
 		this.$http = $http;
+		this.$scope = $scope;
+		this.$uibModal = $uibModal;
 		this.allHqls();
 		this.params = [];
 	}
@@ -21,6 +23,7 @@ export default class HomeController {
 	}
 
 	querySelected(name) {
+		this.currentName = name;
 		this.selectedQuery = this.hqls[name];
 		this.params = getParams(this.selectedQuery);
 	}
@@ -28,10 +31,58 @@ export default class HomeController {
 	submitQuery()
 	{
 		let fullQuery = this.selectedQuery;
+		this.paramsObject = {};
 		this.params.forEach(param => {
+			this.paramsObject[param.key] = param.value;
 			fullQuery = fullQuery.replace(param.match, param.value);
 		});
+		var modalInstance = this.$uibModal.open({
+			templateUrl: 'confirmModalContent.html',
+			controller: 'ModalInstanceCtrl',
+			resolve: {
+				request: () => {
+					return {"queryName": this.currentName, "queryDetail": fullQuery};
+				}
+			}
+		});
+
+		modalInstance.result.then(
+				() => {
+					this.$scope.$emit('LOAD');
+					this.$http({
+						method: 'POST',
+						url: 'rest/hql/run/name/' + this.currentName,
+						data: this.paramsObject
+					}).then(
+							(response) => {
+								this.$scope.$emit('UNLOAD');
+								this.queryResult = response.data;
+							},
+							(err) => {
+								this.$scope.$emit('UNLOAD');
+								if (err.data && err.data.length > 100) {
+									err.data = err.data.substring(0, 97) + '...';
+								}
+								this.modalAlert(err);
+							});
+				},
+				() => {
+					//dismiss: do nothing for now
+					console.log('Modal dismissed at: ' + new Date());
+				});
 		console.log(fullQuery);
+	}
+
+	modalAlert(msg) {
+		this.$uibModal.open({
+			templateUrl: 'alertModalContent.html',
+			controller: 'ModalInstanceCtrl',
+			resolve: {
+				request: () => {
+					return {"message": msg};
+				}
+			}
+		});
 	}
 }
 
@@ -44,4 +95,7 @@ function getParams(str) {
 	});
 	return arr;
 }
+
+HomeController.$inject = ['$scope', '$http', '$uibModal'];
+
 

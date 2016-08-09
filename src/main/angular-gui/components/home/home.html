@@ -43,3 +43,26 @@
     </div>
 </div>
 
+<div class="row">
+    <pre>{{vm.queryResult}}</pre>
+</div>
+
+
+<script type="text/ng-template" id="confirmModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Are you sure you want to Run the Query? </h3>
+    </div>
+    <div class="modal-body">
+        <p>Query name: <b>{{ request.queryName }}</b></p>
+
+        <div>
+            <div>Query Details</div>
+            <pre>{{ request.queryDetail}}</pre>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>
+</script>
+
