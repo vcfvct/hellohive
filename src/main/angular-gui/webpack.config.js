@@ -2,12 +2,12 @@ var webpack = require("webpack");
 
 module.exports = {
 	entry: {
-		BeeDrill: __dirname + '/src/main/angular-gui/index.js'
+		BeeDrill: __dirname + '/index.js'
 
 	},
 	devtool: 'source-map',
 	output: {
-		path: __dirname + '/src/main/angular-gui/dist',
+		path: __dirname + '/dist',
 		filename: '[name].bundle.js'
 	},
 	module: {

@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --output-public-path=/src/main/angular-gui/dist"
+    "start": "webpack-dev-server --output-public-path=/dist"
   },
   "dependencies": {
     "webpack": "^1.12.14",

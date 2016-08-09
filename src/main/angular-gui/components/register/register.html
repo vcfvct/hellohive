@@ -3,10 +3,14 @@
     <div id="formContainer" style="margin-top:20px; padding:30px" class="row panel panel-default">
         <div class="col-md-7">
             <form id="newQueryForm" name="vm.newQueryForm">
+                <div>
+                    <label for="queryNameInput">Query Name:</label>
+                    <input required class="form-control" ng-model="vm.queryName" id="queryNameInput"/>
+                </div>
                 <div class="form-group required">
                     <label for="queryDetail" class="control-label">New Query</label>
                             <textarea id="queryDetail" name="queryDetail" ng-model="vm.newQuery" class="form-control"
-                                      placeholder="New Query Detail" required style="height: 500px;" focus-on-load></textarea>
+                                      placeholder="New Query Detail" required style="height: 300px;" focus-on-load></textarea>
                 </div>
                 <button id="add-query" ng-click="vm.addQuery(vm.newQuery)" class="btn btn-primary">Submit</button>
             </form>
@@ -32,7 +36,7 @@ WHERE xxx
             <h3 class="modal-title">Are you sure you want to submit the request? </h3>
         </div>
         <div class="modal-body">
-            <p>Query name: <b>{{ request.queryId }}</b></p>
+            <p>Query name: <b>{{ request.queryName }}</b></p>
 
             <div>
                 <div>Query Details</div>
