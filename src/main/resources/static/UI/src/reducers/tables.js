@@ -74,6 +74,34 @@ export function tables(state = initState, action) {
 			return action.tables;
 		}
 
+		case 'REGISTER_QUERY':
+		case 'CANCEL_QUERY': {
+
+			let currentTable = '';
+			if (action.tables.length === 1) {
+				currentTable = action.tables[0];
+			} else {
+				return state;
+			}
+
+
+			let newState = {};
+			newState.currentTable  = state.currentTable;
+
+			newState.tables = state.tables.map(table => {
+				if (table.name === currentTable) {
+					let newColumns = table.columns.map(column => {
+						return Object.assign({}, column, {filter: false, selected: false})
+					});
+					return Object.assign({}, table, {columns: newColumns});
+				} else {
+					return table;
+				}
+			})
+
+			return Object.assign({}, newState);
+		}
+
 		default:
 			return state
 	}

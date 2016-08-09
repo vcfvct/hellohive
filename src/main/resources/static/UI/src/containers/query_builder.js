@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import {toggleTable, toggleColumn, toggleFilter} from '../actions'
+import {registerQuery, cancelQuery} from '../actions'
 import QueryBuilder from '../components/query_builder'
 
 
@@ -9,8 +9,19 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRegisterClick: (columns, tables, filters) => {
+      dispatch(registerQuery(columns, tables, filters))
+    },
+    onCancelClick: (tables) => {
+      dispatch(cancelQuery(tables));
+    }
+  }
+}
+
 const QueryBuilderContainer = connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
 )(QueryBuilder)
 
 export default QueryBuilderContainer
