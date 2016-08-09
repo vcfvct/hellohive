@@ -4,8 +4,6 @@ import TableList from '../components/table_list'
 
 
 const mapStateToProps = (state) => {
-	console.log(state);
-
   return {
       tables: state.tables.tables,
 	  currentTable: state.tables.currentTable

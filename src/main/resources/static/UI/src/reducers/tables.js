@@ -21,7 +21,7 @@ export function tables(state = initState, action) {
 
 			return Object.assign({}, newState);
 		}
-			
+
 		case 'TOGGLE_COLUMN': {
 			let newState = {};
 			newState.currentTable  = state.currentTable;
@@ -30,7 +30,7 @@ export function tables(state = initState, action) {
 				if (table.name === action.table) {
 					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? false : true})
+							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? column.filter : false})
 						} else {
 							return column;
 						}
@@ -55,7 +55,7 @@ export function tables(state = initState, action) {
 				if (table.name === action.table) {
 					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : false})
+							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : column.selected})
 						} else {
 							return column;
 						}
