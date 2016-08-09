@@ -5,25 +5,24 @@ const initState = {currentTable: "", tables: []};
 
 export function tables(state = initState, action) {
 	switch (action.type) {
-		case TOGGLE_TABLE:
 
-			state.currentTable = action.table;
+		case TOGGLE_TABLE: {
+			let newState = {};
+			newState.currentTable = action.table;
 
-			state.tables.map(table => {
+			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					table.show = true;
-					if (table.columns.length == 0) {
-						table.columns = action.columns;
-					}
+					return Object.assign({}, table, {show: true, columns: table.columns.length == 0 ? action.columns : table.columns});
 				} else {
-					table.show = false
+					return Object.assign({}, table, {show: false});
 				}
-			})
 
-			return Object.assign({}, state)
+			});
 
-		case 'TOGGLE_COLUMN':
-
+			return Object.assign({}, newState);
+		}
+			
+		case 'TOGGLE_COLUMN': {
 			let newState = {};
 			newState.currentTable  = state.currentTable;
 
@@ -44,7 +43,7 @@ export function tables(state = initState, action) {
 			})
 
 			return Object.assign({}, newState);
-
+		}
 
 		case 'TOGGLE_FILTER':
 		{
