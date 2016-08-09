@@ -20,6 +20,7 @@ export function builder(state = initState, action) {
 			let newFilters = [];
 			state.filters.map(filter => { newFilters.push(filter); });
 
+			newState.tables = [action.table];
 
 			if (hasColumn) {
 				newColumns.map((column, index) => {
@@ -40,15 +41,12 @@ export function builder(state = initState, action) {
 
 			} else {
 				newColumns.push(action.table + '.' + action.column);
-
-				if (!containsItem(state.tables, action.table)) {
-					newState.tables = [action.table]
-				}
-
 			}
 
 			newState.columns = newColumns;
 			newState.filters = newFilters;
+
+			console.log(newState);
 
 			return Object.assign({}, newState);
 		}

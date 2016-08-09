@@ -10,9 +10,6 @@ var divStyle = {
 const TableContent = ({table, onColumnClick, onFilterClick}) => (
 		<table>
 			<tbody>
-			<tr>
-				<td colSpan="3" style={divStyle}>{table.name}</td>
-			</tr>
 			<TableHeader />
 			{table.columns.map(column =>
 					<Column key={column.name} tableName={table.name} column={column} onColumnClick={onColumnClick} onFilterClick={onFilterClick}/>

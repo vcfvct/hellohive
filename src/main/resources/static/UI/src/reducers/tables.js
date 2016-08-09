@@ -12,7 +12,7 @@ export function tables(state = initState, action) {
 
 			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					return Object.assign({}, table, {show: true, columns: table.columns.length == 0 ? action.columns : table.columns});
+					return Object.assign({}, table, {show: true, columns: action.columns});
 				} else {
 					return Object.assign({}, table, {show: false});
 				}
