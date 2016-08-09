@@ -35,9 +35,18 @@ export function appInitActionCreator(tables)
 	};
 }
 
-export function fetchColumns(table) {
+export function registerQuery(columns, tables, filters) {
 	return {
-		type: 'FETCH_COLUMNS',
-		table: table
+		type: 'REGISTER_QUERY',
+		columns: columns,
+		tables: tables,
+		filters: filters
+	}
+}
+
+export function cancelQuery(tables) {
+	return {
+		type: 'CANCEL_QUERY',
+		tables: tables
 	}
 }
