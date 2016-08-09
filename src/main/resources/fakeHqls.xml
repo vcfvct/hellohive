@@ -16,4 +16,30 @@
    <entry key="xm-select-10">
       select * from mrp.QMRC011_SPRVN_SM_prc_txt where begindate='${begindate}' AND firm_crd_nb='${firm_crd_nb}' limit 10
    </entry>
+   <entry key="Cross-market">
+      SELECT
+      XCPTN_TYPE_TX AS `Exception Type`,
+      FROM_UNIXTIME(unix_timestamp(TRD_DT), 'MM/dd/yyyy') AS `Trade Date`,
+      ISSUE_SYM_ID AS `Symbol`,
+      CM_PRTCP_TYPE_CD AS `Participant Type Code`,
+      CM_PRTCP_ID AS `Participant Identifier`,
+      FIRM_CRD_NB AS `CRD Number`,
+      SIDE_CD AS `Side`,
+      MIN_ODR_RCVD_TM AS `Earliest Order Received Time`,
+      ERLST_PBBO_BID_PR AS `Earliest PBBO Bid Price`,
+      ERLST_PBBO_ASK_PR AS `Earliest PBBO Ask Price`,
+      MAX_ODR_RCVD_TM AS `Latest Order Received Time`,
+      LTST_PBBO_BID_PR AS `Latest PBBO Bid Price`,
+      LTST_PBBO_ASK_PR AS `Latest PBBO Ask Price`,
+      ODR_CT AS `Order Count`,
+      TTL_ODR_QT AS `Total Orders Quantity`,
+      MKT_CNTR_IDS AS `Market Center Code`,
+      CNTRA_CM_PRTCP_ID AS `Contra Firm`,
+      ACTVY_TYPE_TX AS `Activity Description`,
+      XCPTN_CT AS `Exception Count`
+      FROM mrp.QMRC011_SPRVN_DTL_PRC_TXT
+      WHERE FIRM_CRD_NB = ${crd}
+      AND BEGINDATE = '${period}'
+      AND SRC_FL='${srcFlag}'
+   </entry>
 </properties>

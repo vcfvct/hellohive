@@ -136,8 +136,9 @@ public class QueryServiceImpl implements QueryService
         {
             PrintWriter printWriter = new PrintWriter(file);
             handleHql(queryWrapper.getSql(), printWriter);
+            queryWrapper.withStatus(QueryWrapper.status.SUCCESS);
             String emailSubject = "Hive query File ready";
-            String emailBody = "File is ready";
+            String emailBody = "File is ready:" + queryWrapper.getQueryId();
             if (!StringUtils.isEmpty(queryWrapper.getNotifyEmail()))
             {
                 MailSender mailSender = new MailSender();
