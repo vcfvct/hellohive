@@ -14,6 +14,6 @@
       explain ${query}
    </entry>
    <entry key="xm-select-10">
-      select * from mrp.QMRC011_SPRVN_SM_prc_txt where begindate='${begindate}' limit 10
+      select * from mrp.QMRC011_SPRVN_SM_prc_txt where begindate='${begindate}' AND mpid=${mpid} limit 10
    </entry>
 </properties>

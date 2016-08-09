@@ -1,0 +1,68 @@
+<html ng-app="BeeDrillApp">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="utf-8"/>
+    <title>BeeDrill</title>
+    <meta name="description" content="BeeDrill"/>
+    <script src="dist/BeeDrill.bundle.js"></script>
+</head>
+<body ng-controller="parentCtrl">
+
+<div nav-bar></div>
+
+<div class="center-div" style="min-height: 600px;">
+    <!--this controller is for eventing-->
+    <div>
+        <loading-bar visible="loading"></loading-bar>
+        <div ng-view class="view-frame"></div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="fn-tag-line">
+            &copy;
+            <script>document.write(new Date().getFullYear())</script>
+            FINRA. <span
+                class="fn-tagline-copy">All rights reserved. FINRA is a registered trademark of the Financial Industry Regulatory Authority, Inc.</span>
+        </div>
+        <nav class="fn-footer-links">
+            <a href="http://www.finra.org/Sitemap/" target="finwin" class="fn-first">Sitemap</a>
+            <a href="http://www.finra.org/Privacy/" target="finwin">Privacy</a>
+            <a href="http://www.finra.org/Legal/" target="finwin" class="fn-last">Legal</a>
+        </nav>
+
+        <div class="fn-links-social">
+            <a href="http://www.twitter.com/FINRA_News" class="fa fa-twitter fn-first" target="_blank"></a>
+            <a href="https://www.linkedin.com/company/financial-industry-regulatory-authority" class="fa fa-linkedin fn-last" target="_blank"></a>
+        </div>
+    </div>
+</footer>
+
+
+<!--modal alert snippet which out-->
+<script type="text/ng-template" id="alertModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Messsage</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div>Message</div>
+            <div>
+                <pre>{{ request.message | json}}</pre>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cancel()">Close</button>
+    </div>
+</script>
+
+<!-- Javascript ================================================== -->
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+</body>
+</html>

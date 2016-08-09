@@ -1,0 +1,282 @@
+/** custom styles **/
+.host-name-list .host-name{
+    cursor: pointer;
+    color: #222930;
+    font-size: 20px;
+
+    -webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    -o-transition: all ease .3s;
+    transition: all ease .3s;
+}
+
+.host-name-list:hover , .host-name-list .host-name:hover{
+    background-color: #4EB1BA;
+    color: #E9E9E9;
+    text-decoration: none;
+}
+
+.center-div {
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+/*the drop down menus should have 'hand' cursor when hovering*/
+ul.uib-dropdown-menu li a{
+    cursor: pointer;
+}
+
+/*json prettier*/
+pre {
+    background-color: ghostwhite;
+    border: 1px solid silver;
+    padding: 10px 20px;
+    margin: 20px;
+}
+
+/*for the input type search, re-enable the clear button which is normalized by bootstrap.*/
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
+
+/*align input to the bottom of the table*/
+table.editable-table tr td{
+    vertical-align: bottom;
+}
+/*for active tab, we add some color to differentiate*/
+.nav-tabs>li.active{
+    background-color: #00695c;
+    color: rgba(255,255,255,.84);
+    font-weight: bold!important;
+}
+/*reduce unnecessary the table size*/
+.cell-delete-button{
+    margin: 0;
+}
+/*override bootstrap's default color #eee since the material design css uses #eee as background color.*/
+hr{
+    border-top: 1px solid #ccc;
+}
+
+/*Start of sticky footer styles*/
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #dededb;
+    font-family: Arial,sans-serif;
+    font-size: 13px;
+    padding: 1.5em 0 3em;
+}
+
+
+.fn-tag-line {
+    display: block;
+    float: left;
+    font-size: .9em;
+    padding-left: .5em;
+    padding-right: 50px;
+}
+.fn-footer-links, .fn-links-social, .fn-tag-line {
+    display: block;
+    float: left;
+    font-size: .9em;
+}
+
+.fn-links-social {
+    float: right;
+}
+.fn-links-social a {
+    padding: 10px;
+}
+
+.fn-footer-links a:link, .fn-footer-links a:visited {
+    border-right: 1px solid #999;
+    color: #025191;
+    padding: 0 .6em 0 .4em;
+    text-decoration: none;
+}
+.fn-footer-links a:link.fn-last, .fn-footer-links a:visited.fn-last {
+    border-right: 0 none;
+    padding-right: 0;
+}
+/*End of sticky footer styles*/
+
+/*****************************************************************/
+/**********         begin of custom checkbox style           *****/
+/*****************************************************************/
+input[type="checkbox"].checkbox {
+    display: none;
+}
+
+input[type="checkbox"].checkbox + label {
+    margin: 0 0 0 10px;
+
+}
+
+/*empty checkbox style(icon) */
+input[type="checkbox"].checkbox + label:before {
+    font-family: FontAwesome;
+    content: "\f096";
+    font-size: 1.6em;
+}
+
+/*checked checkbox style(icon)*/
+input[type="checkbox"].checkbox:checked + label:before {
+    font-family: FontAwesome;
+    content: "\f046";
+}
+/**********************end of custom checkbox style*********************/
+
+
+
+/*****************************************************************/
+/**********         begin of Nav Bar style           *****/
+/*****************************************************************/
+/*hover effect*/
+.navbar-default .navbar-nav>li>a:hover {
+    background-color: #025aa2 !important;
+    color: #ffffff !important;
+}
+
+
+.navbar .navbar-nav>li>a,
+.navbar .navbar-nav>li>a:hover,
+.navbar .navbar-nav>li>a:focus{
+    border-radius: 5px;
+}
+
+/*some tiny transitions for nav*/
+.navbar-default .navbar-nav>li>a {
+    -webkit-transition: all ease .3s;
+    -moz-transition: all ease .3s;
+    -o-transition: all ease .3s;
+    transition: all ease .3s;
+}
+/********************** End of Nav Bar style*********************/
+
+
+/*****************************************************************/
+/**********         begin of Spinner style           *****/
+/*****************************************************************/
+#spinner {
+    -webkit-animation-name: rotateThis;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes rotateThis {
+    from {
+        -webkit-transform: scale(0.5) rotate(0deg);
+    }
+    to {
+        -webkit-transform: scale(0.5) rotate(360deg);
+    }
+}
+
+/* position the spinner-bars and balls correctly (rotate them and translate them outward)*/
+.spinner-bar1 {
+    -moz-transform: rotate(0deg) translate(0, -40px);
+    -webkit-transform: rotate(0deg) translate(0, -40px);
+    opacity: 0.12;
+}
+
+.spinner-bar2 {
+    -moz-transform: rotate(45deg) translate(0, -40px);
+    -webkit-transform: rotate(45deg) translate(0, -40px);
+    opacity: 0.25;
+}
+
+.spinner-bar3 {
+    -moz-transform: rotate(90deg) translate(0, -40px);
+    -webkit-transform: rotate(90deg) translate(0, -40px);
+    opacity: 0.37;
+}
+
+.spinner-bar4 {
+    -moz-transform: rotate(135deg) translate(0, -40px);
+    -webkit-transform: rotate(135deg) translate(0, -40px);
+    opacity: 0.50;
+}
+
+.spinner-bar5 {
+    -moz-transform: rotate(180deg) translate(0, -40px);
+    -webkit-transform: rotate(180deg) translate(0, -40px);
+    opacity: 0.62;
+}
+
+.spinner-bar6 {
+    -moz-transform: rotate(225deg) translate(0, -40px);
+    -webkit-transform: rotate(225deg) translate(0, -40px);
+    opacity: 0.75;
+}
+
+.spinner-bar7 {
+    -moz-transform: rotate(270deg) translate(0, -40px);
+    -webkit-transform: rotate(270deg) translate(0, -40px);
+    opacity: 0.87;
+}
+
+.spinner-bar8 {
+    -moz-transform: rotate(315deg) translate(0, -40px);
+    -webkit-transform: rotate(315deg) translate(0, -40px);
+    opacity: 1;
+}
+
+/* set up the three bar spinners */
+#spinner {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 25px;
+    -moz-border-radius: 100px;
+    float: left;
+    -moz-transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+
+    /* not used right now: */
+    -webkit-animation-name: rotateThis;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+#spinner div {
+    width: 10px;
+    height: 30px;
+    background: #000;
+    position: absolute;
+    top: 35px;
+    left: 45px;
+}
+
+/* rounded outer corners for the second */
+#spinner div {
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+}
+
+#pleaseWaitDialog {
+    top: 50%;
+    left: 45%;
+    outline: none;
+}
+/**********************end of spinner style*********************/
+
+.help-block{
+    padding: 20px;
+    border-radius: 5px;
+}
