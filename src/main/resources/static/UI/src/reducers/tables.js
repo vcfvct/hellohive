@@ -1,63 +1,73 @@
 import {TOGGLE_TABLE, APP_INIT} from '../actions';
+import 'whatwg-fetch';
 
-const initState = [
-	{
-		name: 'TABLE_1', show: true, abbrev: 't1',
-		columns: [{name: 'COL_1', 'type': 'string', 'selected': false, 'filter': false}]
-	},
-	{
-		'name': 'TABLE_2',
-		'show': false,
-		'abbrev': 't2',
-		'columns': [
-			{'name': 'COL_1', 'type': 'string', 'selected': false, 'filter': false},
-			{'name': 'COL_2', 'type': 'string', 'selected': false, 'filter': false}
-		]
-	}];
+const initState = {currentTable: "", tables: []};
 
 export function tables(state = initState, action) {
 	switch (action.type) {
-		case TOGGLE_TABLE:
-			state.map(table => {
-				if (table.name === action.table) {
-					table.show = true
-				}
-				else {
-					table.show = false
-				}
-			})
-			return Object.assign([], state)
 
-		case 'TOGGLE_COLUMN':
-			state.map(table => {
+		case TOGGLE_TABLE: {
+			let newState = {};
+			newState.currentTable = action.table;
+
+			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					table.columns.map(column => {
+					return Object.assign({}, table, {show: true, columns: action.columns});
+				} else {
+					return Object.assign({}, table, {show: false});
+				}
+
+			});
+
+			return Object.assign({}, newState);
+		}
+
+		case 'TOGGLE_COLUMN': {
+			let newState = {};
+			newState.currentTable  = state.currentTable;
+
+			newState.tables = state.tables.map(table => {
+				if (table.name === action.table) {
+					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							column.selected = !column.selected
-							if (!column.selected) {
-								column.filter = false
-							}
+							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? column.filter : false})
+						} else {
+							return column;
 						}
 					})
+					return Object.assign({}, table, {columns: newColumns});
+				} else {
+					return table;
 				}
+
 			})
-			return Object.assign([], state)
+
+			return Object.assign({}, newState);
+		}
 
 		case 'TOGGLE_FILTER':
 		{
-			state.map(table => {
+
+			let newState = {};
+			newState.currentTable  = state.currentTable;
+
+			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					table.columns.map(column => {
+					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							column.filter = !column.filter
-							if (column.filter) {
-								column.selected = true
-							}
+							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : column.selected})
+						} else {
+							return column;
 						}
 					})
+					return Object.assign({}, table, {columns: newColumns});
+				} else {
+					return table;
 				}
-			});
-			return Object.assign([], state);
+
+			})
+
+			return Object.assign({}, newState);
 		}
 
 		case APP_INIT : {

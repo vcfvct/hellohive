@@ -3,10 +3,11 @@ export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_COLUMN = 'TOGGLE_COLUMN';
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
-export function toggleTable(table) {
+export function toggleTable(table, columns) {
 	return {
 		type: TOGGLE_TABLE,
-		table: table
+		table: table,
+		columns: columns
 	}
 }
 
@@ -32,4 +33,11 @@ export function appInitActionCreator(tables)
 		type: APP_INIT,
 		tables
 	};
+}
+
+export function fetchColumns(table) {
+	return {
+		type: 'FETCH_COLUMNS',
+		table: table
+	}
 }
