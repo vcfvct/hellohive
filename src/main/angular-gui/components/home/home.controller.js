@@ -5,7 +5,7 @@
  * Time: 5:07 PM
  */
 export default class HomeController {
-	constructor($scope ,$http, $uibModal) {
+	constructor($scope, $http, $uibModal) {
 		this.$http = $http;
 		this.$scope = $scope;
 		this.$uibModal = $uibModal;
@@ -28,8 +28,7 @@ export default class HomeController {
 		this.params = getParams(this.selectedQuery);
 	}
 
-	submitQuery()
-	{
+	submitQuery() {
 		let fullQuery = this.selectedQuery;
 		this.paramsObject = {};
 		this.params.forEach(param => {
@@ -48,10 +47,25 @@ export default class HomeController {
 
 		modalInstance.result.then(
 				() => {
+					let url = 'rest/hql/run/name/' + this.currentName;
+					if(this.isAsync)
+					{
+						let isAsyncAction = this.isAsync ? 'async' : 'sync';
+						url = url + '?type=' + isAsyncAction;
+					}
+					if(this.email)
+					{
+						url = url + '&email=' + this.email;
+					}
+					if(this.notifyUrl)
+					{
+						url = url + '&notifyUrl=' + this.notifyUrl;
+					}
+
 					this.$scope.$emit('LOAD');
 					this.$http({
 						method: 'POST',
-						url: 'rest/hql/run/name/' + this.currentName,
+						url: url,
 						data: this.paramsObject
 					}).then(
 							(response) => {
@@ -89,9 +103,9 @@ export default class HomeController {
 function getParams(str) {
 	var arr = [];
 	//match our ${...}
-	str.replace(/\${([^}]+)}/g, function(m, remaining, index) {
+	str.replace(/\${([^}]+)}/g, function (m, remaining, index) {
 		//arr.push({ match: m, remainder: remaining, index: index });
-		arr.push({key:remaining, value:"", match: m});
+		arr.push({key: remaining, value: "", match: m});
 	});
 	return arr;
 }

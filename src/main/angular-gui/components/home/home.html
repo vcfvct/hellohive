@@ -35,6 +35,25 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="row">
+                    <div class="form-group">
+                        <input type="checkbox" name="isAysnc" id="isAysnc" class="checkbox" ng-model="vm.isAsync">
+                        <label for="isAysnc"></label>
+                        <label>Async?</label>
+
+
+                    </div>
+                    <div class="form-group" style="padding: 10px">
+                        <label for="email"></label>
+                        <label>Email</label>
+                        <input ng-model="vm.email" class="form-control" id="email"/>
+                    </div>
+                    <div class="form-group" style="padding: 10px">
+                        <label for="notifyUrl"></label>
+                        <label> Notify Url</label>
+                        <input ng-model="vm.notifyUrl" class="form-control" id="notifyUrl"/>
+                    </div>
+                </div>
                 <div class="pull-right">
                     <button class="btn btn-info" ng-click="vm.submitQuery()">Run Query</button>
                 </div>
