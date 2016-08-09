@@ -16,7 +16,7 @@
    <entry key="xm-select-10">
       select * from mrp.QMRC011_SPRVN_SM_prc_txt where begindate='${begindate}' AND firm_crd_nb='${firm_crd_nb}' limit 10
    </entry>
-   <entry key="Cross-market">
+   <entry key="cross-market">
       SELECT
       XCPTN_TYPE_TX AS `Exception Type`,
       FROM_UNIXTIME(unix_timestamp(TRD_DT), 'MM/dd/yyyy') AS `Trade Date`,
