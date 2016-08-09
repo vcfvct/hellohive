@@ -14,31 +14,35 @@ import {appInitActionCreator} from './actions';
 let store = createStore(createathonApp);
 
 ~function init() {
-	let initTables = [];
+	let initTables = {};
+
 
 	fetch('/rest/hivemeta/tables')
 			.then((response) => {
 				return response.json();
 			})
 			.then((tables) => {
-				initTables = tables.map((tableName, index) => {
+				let tableArray = tables.map((tableName, index) => {
 					return {
 						name: tableName, show: index === 0, abbrev: tableName,
 						columns: []
 					}
 				});
-				return fetch('/rest/hivemeta/table/' + initTables[0].name);
+				initTables.tables = tableArray;
+				initTables.currentTable = tableArray[0].name;
+				return fetch('/rest/hivemeta/table/' + initTables.currentTable);
 			})
 			.then(response => {
 				return response.json();
 			})
 			.then(columns => {
-				initTables[0].columns = Object.keys(columns).map(columnName => {
+				initTables.tables[0].columns = Object.keys(columns).map(columnName => {
 					return {name: columnName, type: columns[columnName], selected: false, filter: false};
 				});
 				store.dispatch(appInitActionCreator(initTables))
 			});
 }();
+
 
 render(
 		<MuiThemeProvider>

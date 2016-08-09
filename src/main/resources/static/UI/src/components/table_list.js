@@ -3,13 +3,16 @@ import Table from './table';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-const TableList = ({tables, onTableClick, onColumnClick, onFilterClick}) => (
+
+const TableList = ({tables, currentTable, onTableClick, onColumnClick, onFilterClick}) => (
 		<div>
-			<SelectField onChange={(e) => onTableClick(e.target.value)}>
+
+			<SelectField value={currentTable} onChange={(e) => onTableClick(e.target.outerText)}>
 				{tables.map(table =>
-						<MenuItem key={table.name} value={table.name} primaryText={table.name} />
+					<MenuItem key={table.name} value={table.name} primaryText={table.name} />
 				)}
 			</SelectField>
+
 
 			{tables.map(table =>
 					<div key={table.name}>
