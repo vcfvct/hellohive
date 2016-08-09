@@ -68,7 +68,7 @@ public class HqlRestController
         return Collections.singletonMap(name, hql);
     }
 
-    @RequestMapping(value = "/hql/run/name/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/hql/run/name/{name}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> runHql(@RequestBody Map<String, String> params, @PathVariable("name") String name, HttpServletResponse response,
         @RequestParam(value = "type", required = false) String queryType, @RequestParam(value = "email", required = false) String email,
         @RequestParam(value = "notifyUrl", required = false) String notifyUrl) throws IOException
@@ -113,13 +113,13 @@ public class HqlRestController
         }
     }
 
-    @RequestMapping(value = "/status/queryId/{queryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/status/queryId/{queryId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public QueryWrapper getQueryStatusById(@PathVariable("queryId") String queryId)
     {
         return QueryWrapper.queryStatus.get(queryId);
     }
 
-    @RequestMapping(value = "/status/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/status/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, QueryWrapper> getQueryStatusById()
     {
         return QueryWrapper.queryStatus;
