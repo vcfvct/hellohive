@@ -24,86 +24,51 @@ export function tables(state = initState, action) {
 
 		case 'TOGGLE_COLUMN':
 
-			// let newState = {};
-			// newState.currentTable = state.currentTable;
-			// newState.tables = [];
-			//
-			// state.tables.map(table => {
-			// 	let newTable = {};
-			// 	newTable.name = table.name;
-			// 	newTable.abbrev = table.abbrev;
-			// 	newTable.show = table.show;
-			//
-			//
-			// 	if (table.name === action.table) {
-			//
-			// 		let newColumns = [];
-			//
-			// 		newColumns = table.columns.map(column => {
-			// 			let newCol = {};
-			// 			if (column.name === action.column) {
-			// 				Object.keys(column).forEach(key => {
-			// 					if(key === 'selected') {
-			// 						newCol[key] = !column[key];
-			// 						// if (!newCol[key]) {
-			// 						// 	newCol['filter'] = false;
-			// 						// }
-			// 					} else if (key === 'filter') {
-			// 						if (column[key]) {
-			// 							newCol['filter'] = false;
-			// 						}
-			//
-			// 					} else {
-			// 						newCol[key] = column[key];
-			// 					}
-			// 				});
-			// 				// column.selected = !column.selected
-			// 				// if (!column.selected) {
-			// 				// 	column.filter = false
-			// 				// }
-			// 			}else {
-			// 				Object.keys(column).forEach(key => {
-			// 					newCol[key] = column[key];
-			// 				});
-			// 			}
-			// 			return newCol;
-			// 		})
-			// 	}
-			// })
-			//
-			// return Object.assign({}, newState)
+			let newState = {};
+			newState.currentTable  = state.currentTable;
 
-			state.tables.map(table => {
+			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					table.columns.map(column => {
+					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							column.selected = !column.selected
-							if (!column.selected) {
-								column.filter = false
-							}
+							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? false : true})
+						} else {
+							return column;
 						}
 					})
+					return Object.assign({}, table, {columns: newColumns});
+				} else {
+					return table;
 				}
-			});
 
-			return Object.assign({}, state);
+			})
+
+			return Object.assign({}, newState);
 
 
 		case 'TOGGLE_FILTER':
 		{
-			state.tables.map(table => {
+
+			let newState = {};
+			newState.currentTable  = state.currentTable;
+
+			newState.tables = state.tables.map(table => {
 				if (table.name === action.table) {
-					table.columns.map(column => {
+					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
-							column.filter = !column.filter
-							if (column.filter) {
-								column.selected = true
-							}
+							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : false})
+						} else {
+							return column;
 						}
 					})
+					return Object.assign({}, table, {columns: newColumns});
+				} else {
+					return table;
 				}
-			});
-			return Object.assign({}, state);
+
+			})
+
+			return Object.assign({}, newState);
 		}
 
 		case APP_INIT : {
