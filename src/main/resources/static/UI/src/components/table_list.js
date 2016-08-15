@@ -1,26 +1,25 @@
 import React from 'react'
-import Table from './table';
+import DBTableColumns from './columns';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 
-const TableList = ({tables, currentTable, onTableClick, onColumnClick, onFilterClick}) => (
-		<div>
+export default class TableList extends React.Component {
+	render() {
+		var targetTable = this.props.tables.find((table)=> table.name === this.props.currentTable);
 
-			<SelectField value={currentTable} onChange={(e) => onTableClick(e.target.outerText)}>
-				{tables.map(table =>
-					<MenuItem key={table.name} value={table.name} primaryText={table.name} />
+		return <div>
+			<SelectField value={this.props.currentTable} onChange={(e) => this.props.onTableClick(e.target.outerText, this.props.tables)}>
+				{this.props.tables.map(table =>
+						<MenuItem key={table.name} value={table.name} primaryText={table.name}/>
 				)}
 			</SelectField>
 
-
-			{tables.map(table =>
-					<div key={table.name}>
-						{table.show ? <Table table={table} onColumnClick={onColumnClick} onFilterClick={onFilterClick}/> : null}
-					</div>
-			)}
-
-		</div>
-);
-
-export default TableList
+			{targetTable ?
+					<div key={targetTable.name}>
+						<DBTableColumns tableModel={targetTable} onColumnClick={this.props.onColumnClick} onFilterClick={this.props.onFilterClick}/>
+					</div> : null
+			}
+		</div>;
+	}
+}

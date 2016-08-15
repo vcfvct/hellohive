@@ -1,13 +1,26 @@
-export const APP_INIT = 'APP_INIT';
+import axios from 'axios';
+
 export const TOGGLE_TABLE = 'TOGGLE_TABLE';
 export const TOGGLE_COLUMN = 'TOGGLE_COLUMN';
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
-export function toggleTable(table, columns) {
+export const FETCH_TABLES = 'FETCH_TABLES';
+export const FETCH_COLUMNS = 'FETCH_COLUMNS';
+
+export const PENDING = '_PENDING';
+export const FULFILLED = '_FULFILLED';
+export const REJECTED = '_REJECTED';
+
+export function toggleTable(tableName, tables) {
+	let targetTable = tables.find((table) => table.name === tableName);
+	if(targetTable.columns.length > 0){
 	return {
 		type: TOGGLE_TABLE,
-		table: table,
-		columns: columns
+		table: tableName,
+		columns: targetTable.columns
+	}
+	}else{
+		return fetchColumns(tableName);
 	}
 }
 
@@ -27,12 +40,18 @@ export function toggleFilter(table, column) {
 	};
 }
 
-export function appInitActionCreator(tables)
-{
+export function fetchTables() {
 	return {
-		type: APP_INIT,
-		tables
-	};
+		type: FETCH_TABLES,
+		payload: axios.get('/rest/hivemeta/tables')
+   }
+}
+export function fetchColumns(tableName) {
+	return (dispatch) => {
+		axios.get('/rest/hivemeta/table/' + tableName).then((rs) => {
+			dispatch({type: FETCH_COLUMNS + FULFILLED, columns: rs.data, tableName})
+		})
+	}
 }
 
 export function registerQuery(columns, tables, filters) {

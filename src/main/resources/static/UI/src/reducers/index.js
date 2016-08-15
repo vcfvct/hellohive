@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import { tables } from './tables'
+import { tablesModel } from './tables'
 import { builder } from './builder'
 
 const createathonApp = combineReducers({
-	tables, builder
-})
+	tablesModel, builder
+});
 
 export default createathonApp

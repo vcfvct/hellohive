@@ -8,13 +8,16 @@
     "start": "webpack-dev-server --output-public-path=/dist/"
   },
   "dependencies": {
+    "axios": "^0.13.1",
     "material-ui": "0.15.3",
     "react": "15.3.0",
     "react-dom": "15.3.0",
     "react-redux": "4.4.5",
     "react-tap-event-plugin": "1.0.0",
     "redux": "3.5.2",
-    "whatwg-fetch": "1.0.0"
+    "redux-logger": "^2.6.1",
+    "redux-promise-middleware": "^3.3.2",
+    "redux-thunk": "^2.1.0",
   },
   "devDependencies": {
     "babel-loader": "6.2.4",
