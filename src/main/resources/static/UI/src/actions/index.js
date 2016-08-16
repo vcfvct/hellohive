@@ -7,19 +7,22 @@ export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 export const FETCH_TABLES = 'FETCH_TABLES';
 export const FETCH_COLUMNS = 'FETCH_COLUMNS';
 
+export const REGISTER_QUERY = 'REGISTER_QUERY';
+
 export const PENDING = '_PENDING';
 export const FULFILLED = '_FULFILLED';
 export const REJECTED = '_REJECTED';
 
 export function toggleTable(tableName, tables) {
 	let targetTable = tables.find((table) => table.name === tableName);
-	if(targetTable.columns.length > 0){
-	return {
-		type: TOGGLE_TABLE,
-		table: tableName,
-		columns: targetTable.columns
+	if (targetTable.columns.length > 0) {
+		return {
+			type: TOGGLE_TABLE,
+			table: tableName,
+			columns: targetTable.columns
+		}
 	}
-	}else{
+	else {
 		return fetchColumns(tableName);
 	}
 }
@@ -44,7 +47,7 @@ export function fetchTables() {
 	return {
 		type: FETCH_TABLES,
 		payload: axios.get('/rest/hivemeta/tables')
-   }
+	}
 }
 export function fetchColumns(tableName) {
 	return (dispatch) => {
@@ -55,11 +58,32 @@ export function fetchColumns(tableName) {
 }
 
 export function registerQuery(columns, tables, filters) {
+	let query = 'select ';
+	query += columns.join();
+	query += ' from ';
+	query += tables.join();
+
+	if (filters.length > 0) {
+
+		for (var i = 0; i < filters.length; i++) {
+			filters[i] = filters[i] + ' = ${' + filters[i] + '}'
+		}
+
+		query += ' where ';
+		query += filters.join();
+	}
+
+	let queryName = 'query-' + Math.floor(Math.random() * 10000 + 1);
+
+
 	return {
 		type: 'REGISTER_QUERY',
-		columns: columns,
-		tables: tables,
-		filters: filters
+		payload: axios({
+					method: 'post',
+					url: '/rest/hql/register/name/' + queryName,
+					data: query
+				}
+		)
 	}
 }
 

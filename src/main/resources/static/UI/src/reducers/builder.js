@@ -1,8 +1,7 @@
-import 'whatwg-fetch';
+import {REGISTER_QUERY, FULFILLED} from '../actions';
 
 const initState = {'tables': [], 'columns': [], 'filters': []}
 
-let counter =  0;
 
 export function builder(state = initState, action) {
 
@@ -87,9 +86,9 @@ export function builder(state = initState, action) {
 			return Object.assign({}, newState);
 		}
 
-		case 'REGISTER_QUERY': {
+		case REGISTER_QUERY + FULFILLED: {
 
-			let query = 'select ';
+/*			let query = 'select ';
 			query += action.columns.join();
 			query += ' from ';
 			query += action.tables.join();
@@ -113,7 +112,7 @@ export function builder(state = initState, action) {
 				body: query
 			})
 
-			console.log('Query Registered Successfully');
+			console.log('Query Registered Successfully');*/
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
 

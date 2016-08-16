@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import {onRegisterClick} from '../actions';
-
-let isRegistered = false;
+import RaisedButton from 'material-ui/RaisedButton';
 
 const QueryBuilder = ({query, onRegisterClick, onCancelClick}) => (
 	<div>
@@ -49,9 +48,9 @@ const QueryBuilder = ({query, onRegisterClick, onCancelClick}) => (
 		}
 
 		{query.tables.length > 0 ?
-			<div>
-				<button onClick={() => onRegisterClick(query.columns, query.tables, query.filters) }>Register</button>
-				<button onClick={() => onCancelClick(query.tables)} >Cancel</button>
+			<div style={{margin:'10px', float: 'right'}}>
+				<RaisedButton label="Register" primary={true} onClick={() => onRegisterClick(query.columns, query.tables, query.filters) }/>
+				<RaisedButton label="Cancel" onClick={() => onCancelClick(query.tables)} />
 			</div>
 			:
 			null
