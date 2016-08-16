@@ -87,32 +87,6 @@ export function builder(state = initState, action) {
 		}
 
 		case REGISTER_QUERY + FULFILLED: {
-
-/*			let query = 'select ';
-			query += action.columns.join();
-			query += ' from ';
-			query += action.tables.join();
-
-
-			if (action.filters.length > 0) {
-
-				for (var i = 0; i < action.filters.length; i++) {
-					action.filters[i] = action.filters[i] + ' = ${' + action.filters[i] + '}'
-				}
-
-				query += ' where ';
-				query += action.filters.join();
-			}
-
-			let queryName = 'query-' + counter;
-			counter++;
-
-			fetch('/rest/hql/register/name/' + queryName, {
-				method: 'POST',
-				body: query
-			})
-
-			console.log('Query Registered Successfully');*/
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
 

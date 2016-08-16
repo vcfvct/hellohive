@@ -7,7 +7,7 @@ const mapStateToProps = (state) => {
   return {
     query: state.builder
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -18,10 +18,10 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(cancelQuery(tables));
     }
   }
-}
+};
 
 const QueryBuilderContainer = connect(
-  mapStateToProps, mapDispatchToProps
-)(QueryBuilder)
+        mapStateToProps, mapDispatchToProps
+)(QueryBuilder);
 
 export default QueryBuilderContainer

@@ -9,6 +9,9 @@ export const FETCH_COLUMNS = 'FETCH_COLUMNS';
 
 export const REGISTER_QUERY = 'REGISTER_QUERY';
 
+export const LOAD = 'loading';
+export const UNLOAD = 'hide';
+
 export const PENDING = '_PENDING';
 export const FULFILLED = '_FULFILLED';
 export const REJECTED = '_REJECTED';
@@ -51,8 +54,10 @@ export function fetchTables() {
 }
 export function fetchColumns(tableName) {
 	return (dispatch) => {
+		dispatch({type: LOAD});
 		axios.get('/rest/hivemeta/table/' + tableName).then((rs) => {
-			dispatch({type: FETCH_COLUMNS + FULFILLED, columns: rs.data, tableName})
+			dispatch({type: FETCH_COLUMNS + FULFILLED, columns: rs.data, tableName});
+			dispatch({type: UNLOAD});
 		})
 	}
 }
@@ -75,13 +80,13 @@ export function registerQuery(columns, tables, filters) {
 
 	let queryName = 'query-' + Math.floor(Math.random() * 10000 + 1);
 
-
 	return {
 		type: 'REGISTER_QUERY',
 		payload: axios({
 					method: 'post',
 					url: '/rest/hql/register/name/' + queryName,
-					data: query
+					data: query,
+					headers: {'Content-Type': 'text/plain'}
 				}
 		)
 	}

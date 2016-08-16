@@ -1,43 +1,45 @@
 {
-	"tables": [
-		{
-			"name":"TABLE_1",
-			"show":false,
-			"abbrev":"t1",
-			"columns":[
-				{
-					"name":"COL_1",
-					"type":"string",
-					"selected":false,
-					"filter":false
-				}
-			]
-		},
-		{
-			"name":"TABLE_2",
-			"show":false,
-			"abbrev":"t2",
-			"columns":[
-				{
-					"name":"COL_1",
-					"type":"string",
-					"selected":false,
-					"filter":false
-				},
-				{
-					"name":"COL_2",
-					"type":"string",
-					"selected":false,
-					"filter":false
-				}
-			]
-		}
-	],
-
-	"query": {
-		"tables":[],
-		"columns":[],
-		"filters":[]
-	}
-
+  "isLoading": "hide",
+  "tablesModel": {
+    "tables": [
+      {
+        "name": "TABLE_1",
+        "show": false,
+        "abbrev": "t1",
+        "columns": [
+          {
+            "name": "COL_1",
+            "type": "string",
+            "selected": false,
+            "filter": false
+          }
+        ]
+      },
+      {
+        "name": "TABLE_2",
+        "show": false,
+        "abbrev": "t2",
+        "columns": [
+          {
+            "name": "COL_1",
+            "type": "string",
+            "selected": false,
+            "filter": false
+          },
+          {
+            "name": "COL_2",
+            "type": "string",
+            "selected": false,
+            "filter": false
+          }
+        ]
+      }
+    ],
+    "currentTable": ""
+  },
+  "query": {
+    "tables": [],
+    "columns": [],
+    "filters": []
+  }
 }

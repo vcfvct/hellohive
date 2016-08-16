@@ -6,10 +6,14 @@ import {TableRow, TableRowColumn} from 'material-ui/Table';
 const Column = ({tableName, column, onColumnClick, onFilterClick}) => (
 
 		<TableRow key={column.name}>
-			<TableRowColumn><Toggle label= {column.name} toggled={column.selected} onToggle={() => onColumnClick(tableName, column.name)} labelPosition="right"/></TableRowColumn>
+			<TableRowColumn>
+				<Toggle label={column.name} toggled={column.selected} onToggle={() => onColumnClick(tableName, column.name)} labelPosition="right"/>
+			</TableRowColumn>
 			<TableRowColumn>{column.type}</TableRowColumn>
-			<TableRowColumn><Toggle toggled={column.filter} onToggle={() => onFilterClick(tableName, column.name)}/></TableRowColumn>
+			<TableRowColumn>
+				<Toggle toggled={column.filter} onToggle={() => onFilterClick(tableName, column.name)}/>
+			</TableRowColumn>
 		</TableRow>
-)
+);
 
 export default Column
