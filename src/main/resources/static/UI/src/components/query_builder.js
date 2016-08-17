@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import Divider from 'material-ui/Divider';
 import {onRegisterClick} from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 import RegisterFeedback from './RegisterFeedback';
@@ -15,6 +16,7 @@ const QueryBuilder = ({query, onRegisterClick, onCancelClick, onRegFeedbackDismi
 						:
 						null
 				}
+				<Divider />
 			    <pre>
 					{ query.columns.length > 0 ?
 							<div>

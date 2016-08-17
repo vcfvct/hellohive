@@ -29,10 +29,10 @@ export default class LoadingIndicator extends React.Component {
 				<div className='modal' style={{display:this.props.isLoading === LOAD ? 'block':'none'}}>
 					<div>
 						<RefreshIndicator
-								size={40}
+								size={50}
 								left={-20}
 								top={200}
-								status={LOAD}
+								status='loading'
 								style={style.refresh}
 						/>
 					</div>

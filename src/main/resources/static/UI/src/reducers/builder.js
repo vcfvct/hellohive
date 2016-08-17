@@ -1,4 +1,4 @@
-import {REGISTER_QUERY, FULFILLED, TOGGLE_COLUMN, TOGGLE_FILTER, REG_FEEDBACK_CLOSED} from '../actions';
+import {REGISTER_QUERY, FULFILLED, TOGGLE_TABLE, TOGGLE_COLUMN, TOGGLE_FILTER, REG_FEEDBACK_CLOSED} from '../actions';
 
 const initState = {'tables': [], 'columns': [], 'filters': [], queryName: '', queryContent: '', showRegisterRs: false};
 
@@ -7,7 +7,7 @@ export function builder(state = initState, action) {
 
 	switch (action.type) {
 
-		case 'TOGGLE_TABLE':
+		case TOGGLE_TABLE:
 		{
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
@@ -69,7 +69,7 @@ export function builder(state = initState, action) {
 		}
 		case REG_FEEDBACK_CLOSED:
 		{
-		   return {...state, showRegisterRs: false}
+		   return {...state, showRegisterRs: false, queryName: '', queryContent: ''}
 		}
 
 		default:

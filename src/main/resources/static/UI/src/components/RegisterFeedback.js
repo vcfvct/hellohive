@@ -7,6 +7,7 @@
 import React from 'react'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
 
 
 export default class RegisterFeedback extends React.Component {
@@ -30,7 +31,7 @@ export default class RegisterFeedback extends React.Component {
 		           open={this.props.showRegisterRs}
 		           onRequestClose={this.handleClose.bind(this)}>
 			   <div>Registered Query Name: <b>{this.props.queryName}</b></div>
-			   <p>{this.props.queryContent}</p>
+			   <Paper zDepth={2} style={{margin:'20px', padding: '20px'}}>{this.props.queryContent}</Paper>
 		   </Dialog>
 		);
 	}
