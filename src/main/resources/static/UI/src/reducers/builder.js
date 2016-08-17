@@ -1,13 +1,14 @@
-import {REGISTER_QUERY, FULFILLED, TOGGLE_COLUMN, TOGGLE_FILTER} from '../actions';
+import {REGISTER_QUERY, FULFILLED, TOGGLE_COLUMN, TOGGLE_FILTER, REG_FEEDBACK_CLOSED} from '../actions';
 
-const initState = {'tables': [], 'columns': [], 'filters': []}
+const initState = {'tables': [], 'columns': [], 'filters': [], queryName: '', queryContent: '', showRegisterRs: false};
 
 
 export function builder(state = initState, action) {
 
 	switch (action.type) {
 
-		case 'TOGGLE_TABLE': {
+		case 'TOGGLE_TABLE':
+		{
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
 
@@ -19,17 +20,19 @@ export function builder(state = initState, action) {
 			//  2.2 if no columns any more , remove table.
 			let newState = {...state, tables: [action.table]};
 
-			if(action.newVal){
+			if (action.newVal) {
 				newState.columns = state.columns.concat(action.column);
-			}else{
+			}
+			else {
 				newState.columns = state.columns.filter((column) => column !== action.column);
 
-				if(state.filters.some((filter) => filter === action.column)){
+				if (state.filters.some((filter) => filter === action.column)) {
 					newState.filters = state.filters.filter((filter) => filter !== action.column);
-				}else{
+				}
+				else {
 					newState.filters = state.filters;
 				}
-				if(newState.columns.length === 0) {
+				if (newState.columns.length === 0) {
 					newState.tables = [];
 				}
 			}
@@ -42,24 +45,31 @@ export function builder(state = initState, action) {
 			//   2.1 if column is not selected, add to columns
 			let newState = {...state, tables: [action.table]};
 
-			if(!action.newVal){
+			if (!action.newVal) {
 				newState.filters = state.filters.filter((filter) => filter !== action.column);
-			}else{
+			}
+			else {
 				newState.filters = state.filters.concat(action.column);
-				if(!state.columns.some((column)=>column===action.column)){
+				if (!state.columns.some((column)=>column === action.column)) {
 					newState.columns = state.columns.concat(action.column);
 				}
 			}
 			return newState;
 		}
 
-		//case REGISTER_QUERY + FULFILLED: {
-		//	return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
-		//}
+		case REGISTER_QUERY + FULFILLED:
+		{
+			return Object.assign({}, state, {queryName: action.queryName, queryContent: action.queryContent, showRegisterRs: true});
+		}
 
-		case 'CANCEL_QUERY': {
+		case 'CANCEL_QUERY':
+		{
 			console.log('Query Cancelled Successfully');
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
+		}
+		case REG_FEEDBACK_CLOSED:
+		{
+		   return {...state, showRegisterRs: false}
 		}
 
 		default:

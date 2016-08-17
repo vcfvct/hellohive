@@ -16,6 +16,8 @@ export const PENDING = '_PENDING';
 export const FULFILLED = '_FULFILLED';
 export const REJECTED = '_REJECTED';
 
+export const REG_FEEDBACK_CLOSED = 'REG_FEEDBACK_CLOSED';
+
 export function toggleTable(tableName, tables) {
 	let targetTable = tables.find((table) => table.name === tableName);
 	if (targetTable.columns.length > 0) {
@@ -65,34 +67,43 @@ export function fetchColumns(tableName) {
 }
 
 export function registerQuery(columns, tables, filters) {
-	let query = 'select ';
-	query += columns.join();
-	query += ' from ';
-	query += tables.join();
+	return (dispatch) => {
+		dispatch({type: LOAD});
 
-	if (filters.length > 0) {
-		let newFilters = filters.map((filter) => filter + ' = ${' + filter + '}');
-		query += ' where ';
-		query += newFilters.join();
-	}
 
-	let queryName = 'query-' + Math.floor(Math.random() * 10000000 + 1);
+		let queryContent = 'select ';
+		queryContent += columns.join();
+		queryContent += ' from ';
+		queryContent += tables.join();
 
-	return {
-		type: 'REGISTER_QUERY',
-		payload: axios({
-					method: 'post',
-					url: '/rest/hql/register/name/' + queryName,
-					data: query,
-					headers: {'Content-Type': 'text/plain'}
-				}
-		)
-	}
+		if (filters.length > 0) {
+			let newFilters = filters.map((filter) => filter + ' = ${' + filter + '}');
+			queryContent += ' where ';
+			queryContent += newFilters.join();
+		}
+
+		let queryName = 'query-' + Math.floor(Math.random() * 10000000 + 1);
+		axios({
+			method: 'post',
+			url: '/rest/hql/register/name/' + queryName,
+			data: queryContent,
+			headers: {'Content-Type': 'text/plain'}
+		}).then(()=> {
+			dispatch({type: REGISTER_QUERY + FULFILLED, queryName, queryContent});
+			dispatch({type: UNLOAD});
+		});
+	};
 }
 
 export function cancelQuery(tables) {
 	return {
 		type: 'CANCEL_QUERY',
 		tables: tables
+	}
+}
+
+export function onRegFeedbackDismiss(){
+	return{
+		type: REG_FEEDBACK_CLOSED
 	}
 }
