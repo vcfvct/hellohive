@@ -1,72 +1,55 @@
-import {TOGGLE_TABLE, FETCH_TABLES, FETCH_COLUMNS, PENDING, FULFILLED, REJECTED} from '../actions';
+import {TOGGLE_TABLE, FETCH_TABLES, FETCH_COLUMNS, PENDING, FULFILLED, REJECTED, TOGGLE_COLUMN, TOGGLE_FILTER, REGISTER_QUERY} from '../actions';
 
-const initState = {currentTable: "", tables: []};
+const initState = {currentTable: '', tables: []};
 
 export function tablesModel(state = initState, action) {
 	switch (action.type) {
 
 		case TOGGLE_TABLE: {
-			let newState = {};
-			newState.currentTable = action.table;
-
-			newState.tables = state.tables.map(table => {
-				if (table.name === action.table) {
-					return Object.assign({}, table, {show: true, columns: action.columns});
-				} else {
-					return Object.assign({}, table, {show: false});
-				}
-
-			});
-
-			return Object.assign({}, newState);
+			return {...state, currentTable: action.table};
 		}
 
-		case 'TOGGLE_COLUMN': {
-			let newState = {};
-			newState.currentTable  = state.currentTable;
-
-			newState.tables = state.tables.map(table => {
+		case TOGGLE_COLUMN: {
+			let newTables = state.tables.map(table => {
 				if (table.name === action.table) {
 					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
 							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? column.filter : false})
-						} else {
+						}
+						else {
 							return column;
 						}
-					})
+					});
 					return Object.assign({}, table, {columns: newColumns});
-				} else {
+				}
+				else {
 					return table;
 				}
+			});
 
-			})
-
-			return Object.assign({}, newState);
+			return {...state, tables: newTables};
 		}
 
-		case 'TOGGLE_FILTER':
+		case TOGGLE_FILTER:
 		{
-
-			let newState = {};
-			newState.currentTable  = state.currentTable;
-
-			newState.tables = state.tables.map(table => {
+			let newTables = state.tables.map(table => {
 				if (table.name === action.table) {
 					let newColumns = table.columns.map(column => {
 						if (column.name === action.column) {
 							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : column.selected})
-						} else {
+						}
+						else {
 							return column;
 						}
-					})
+					});
 					return Object.assign({}, table, {columns: newColumns});
-				} else {
+				}
+				else {
 					return table;
 				}
+			});
 
-			})
-
-			return Object.assign({}, newState);
+			return {...state, tables: newTables};
 		}
 
 		case FETCH_TABLES + FULFILLED : {
@@ -97,25 +80,13 @@ export function tablesModel(state = initState, action) {
 				}
 				return result;
 			});
-			return Object.assign({}, state, {tables: newTables}, {currentTable: action.tableName});
+			return Object.assign({}, state, {tables: newTables});
 		}
 
-		case 'REGISTER_QUERY':
+		//case REGISTER_QUERY+FULFILLED:
 		case 'CANCEL_QUERY': {
-
-			let currentTable = '';
-			if (action.tables.length === 1) {
-				currentTable = action.tables[0];
-			} else {
-				return state;
-			}
-
-
-			let newState = {};
-			newState.currentTable  = state.currentTable;
-
-			newState.tablesModel = state.tablesModel.map(table => {
-				if (table.name === currentTable) {
+			let newTables = state.tables.map(table => {
+				if (table.name === state.currentTable) {
 					let newColumns = table.columns.map(column => {
 						return Object.assign({}, column, {filter: false, selected: false})
 					});
@@ -126,7 +97,7 @@ export function tablesModel(state = initState, action) {
 				}
 			});
 
-			return Object.assign({}, newState);
+			return {...state, tables: newTables};
 		}
 
 		default:

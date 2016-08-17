@@ -3,14 +3,14 @@ import {onRegisterClick} from '../actions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const QueryBuilder = ({query, onRegisterClick, onCancelClick}) => (
-	<div>
+	<div style={{display:query.tables.length && query.columns.length ? 'block':'none'}}>
 
 		{query.tables.length > 0 ?
-			<div> Query Builder </div>
+			<h2> Query Builder </h2>
 			:
 			null
 		}
-
+	   <pre>
 		{ query.columns.length > 0 ?
 			<div>
 				Select <br />
@@ -46,17 +46,15 @@ const QueryBuilder = ({query, onRegisterClick, onCancelClick}) => (
 			:
 			null
 		}
-
+	   </pre>
 		{query.tables.length > 0 ?
 			<div style={{margin:'10px', float: 'right'}}>
-				<RaisedButton label="Register" primary={true} onClick={() => onRegisterClick(query.columns, query.tables, query.filters) }/>
+				<RaisedButton label="Register" primary={true} style={{marginRight:'10px'}} onClick={() => onRegisterClick(query.columns, query.tables, query.filters) }/>
 				<RaisedButton label="Cancel" onClick={() => onCancelClick(query.tables)} />
 			</div>
 			:
 			null
 		}
-
-
 	</div>
 )
 

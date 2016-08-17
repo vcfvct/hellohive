@@ -21,8 +21,7 @@ export function toggleTable(tableName, tables) {
 	if (targetTable.columns.length > 0) {
 		return {
 			type: TOGGLE_TABLE,
-			table: tableName,
-			columns: targetTable.columns
+			table: tableName
 		}
 	}
 	else {
@@ -30,19 +29,21 @@ export function toggleTable(tableName, tables) {
 	}
 }
 
-export function toggleColumn(table, column) {
+export function toggleColumn(table, column, newVal) {
 	return {
 		type: TOGGLE_COLUMN,
 		table: table,
-		column: column
+		column: column,
+		newVal
 	}
 }
 
-export function toggleFilter(table, column) {
+export function toggleFilter(table, column, newVal) {
 	return {
 		type: TOGGLE_FILTER,
 		table: table,
-		column: column
+		column: column,
+		newVal
 	};
 }
 
@@ -57,6 +58,7 @@ export function fetchColumns(tableName) {
 		dispatch({type: LOAD});
 		axios.get('/rest/hivemeta/table/' + tableName).then((rs) => {
 			dispatch({type: FETCH_COLUMNS + FULFILLED, columns: rs.data, tableName});
+			dispatch({type: TOGGLE_TABLE, table: tableName});
 			dispatch({type: UNLOAD});
 		})
 	}
@@ -69,16 +71,12 @@ export function registerQuery(columns, tables, filters) {
 	query += tables.join();
 
 	if (filters.length > 0) {
-
-		for (var i = 0; i < filters.length; i++) {
-			filters[i] = filters[i] + ' = ${' + filters[i] + '}'
-		}
-
+		let newFilters = filters.map((filter) => filter + ' = ${' + filter + '}');
 		query += ' where ';
-		query += filters.join();
+		query += newFilters.join();
 	}
 
-	let queryName = 'query-' + Math.floor(Math.random() * 10000 + 1);
+	let queryName = 'query-' + Math.floor(Math.random() * 10000000 + 1);
 
 	return {
 		type: 'REGISTER_QUERY',

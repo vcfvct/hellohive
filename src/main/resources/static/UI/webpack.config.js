@@ -11,15 +11,21 @@ module.exports = {
    preLoaders: [{test: /\.jsx$/, exclude: /node_modules/, loader: 'eslint-loader'
    }],
     loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-            presets: [ 'es2015', 'react', 'stage-0'],
-            plugins: ['babel-plugin-transform-decorators-legacy']
-        }
-      }
+        {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel',
+            query: {
+                presets: ['es2015', 'react', 'stage-0'],
+                plugins: ['babel-plugin-transform-decorators-legacy']
+            }
+        },
+        {
+            test: /\.css$/,
+            //loaders: ['style', 'css'],
+            loader: 'style!css?modules',
+            include: /flexboxgrid/}
+
     ]
   },
     devServer: {

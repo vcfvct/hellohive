@@ -14,11 +14,11 @@ const mapDispatchToProps = (dispatch) => {
 		onTableClick: (tableName, tables) => {
 			dispatch(toggleTable(tableName, tables))
 		},
-		onColumnClick: (table, name) => {
-			dispatch(toggleColumn(table, name))
+		onColumnClick: (table, name, newVal) => {
+			dispatch(toggleColumn(table, name, newVal))
 		},
-		onFilterClick: (table, name) => {
-			dispatch(toggleFilter(table, name))
+		onFilterClick: (table, name, newVal) => {
+			dispatch(toggleFilter(table, name, newVal))
 		}
 	}
 };

@@ -1,4 +1,4 @@
-import {REGISTER_QUERY, FULFILLED} from '../actions';
+import {REGISTER_QUERY, FULFILLED, TOGGLE_COLUMN, TOGGLE_FILTER} from '../actions';
 
 const initState = {'tables': [], 'columns': [], 'filters': []}
 
@@ -11,84 +11,51 @@ export function builder(state = initState, action) {
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
 
-		case 'TOGGLE_COLUMN':
+		case TOGGLE_COLUMN:
 		{
-			let newState = {};
+			//1.if newVal is true, add to the columns
+			//2.if new Value is false, remove from columns
+			//  2.1 check if filter is selected, if so remove filter
+			//  2.2 if no columns any more , remove table.
+			let newState = {...state, tables: [action.table]};
 
-			let hasColumn = containsItem(state.columns,  action.column);
+			if(action.newVal){
+				newState.columns = state.columns.concat(action.column);
+			}else{
+				newState.columns = state.columns.filter((column) => column !== action.column);
 
-			let newColumns = [];
-			state.columns.map(column => { newColumns.push(column); });
-
-			let newFilters = [];
-			state.filters.map(filter => { newFilters.push(filter); });
-
-			newState.tables = [action.table];
-
-			if (hasColumn) {
-				newColumns.map((column, index) => {
-					if (column.includes( action.column)) {
-						newColumns.splice(index, 1);
-					}
-				})
-
-				newFilters.map((filter, index) => {
-					if (filter.includes( action.column)) {
-						newFilters.splice(index, 1);
-					}
-				})
-
-				if (newColumns.length == 0) {
+				if(state.filters.some((filter) => filter === action.column)){
+					newState.filters = state.filters.filter((filter) => filter !== action.column);
+				}else{
+					newState.filters = state.filters;
+				}
+				if(newState.columns.length === 0) {
 					newState.tables = [];
 				}
-
-			} else {
-				newColumns.push( action.column);
 			}
-
-			newState.columns = newColumns;
-			newState.filters = newFilters;
-
-			return Object.assign({}, newState);
+			return newState;
 		}
-		case 'TOGGLE_FILTER':
+		case TOGGLE_FILTER:
 		{
+			//1. if newval is false, remove from filters
+			//2. if newVal is true, add to the filters
+			//   2.1 if column is not selected, add to columns
+			let newState = {...state, tables: [action.table]};
 
-			let newState = {};
-
-			let newColumns = [];
-			state.columns.map(column => { newColumns.push(column); });
-
-			let newFilters = [];
-			state.filters.map(filter => { newFilters.push(filter); });
-
-			let hasFilter = containsItem(state.filters,  action.column);
-
-			if (hasFilter) {
-				newFilters.map((filter, index) => {
-					if (filter.includes( action.column)) {
-						newFilters.splice(index, 1);
-					}
-				});
-			} else {
-				newFilters.push( action.column);
-
-				let hasColumn = containsItem(state.columns,  action.column)
-				if (!hasColumn) {
-					newColumns.push( action.column);
+			if(!action.newVal){
+				newState.filters = state.filters.filter((filter) => filter !== action.column);
+			}else{
+				newState.filters = state.filters.concat(action.column);
+				if(!state.columns.some((column)=>column===action.column)){
+					newState.columns = state.columns.concat(action.column);
 				}
 			}
-
-			newState.columns = newColumns;
-			newState.filters = newFilters;
-			newState.tables = [action.table];
-
-			return Object.assign({}, newState);
+			return newState;
 		}
 
-		case REGISTER_QUERY + FULFILLED: {
-			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
-		}
+		//case REGISTER_QUERY + FULFILLED: {
+		//	return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
+		//}
 
 		case 'CANCEL_QUERY': {
 			console.log('Query Cancelled Successfully');
@@ -98,30 +65,4 @@ export function builder(state = initState, action) {
 		default:
 			return state
 	}
-
 }
-
-function containsItem(array, selectedItem) {
-	let containsItem = false
-
-	array.map(item => {
-		if (item.includes(selectedItem)) {
-			containsItem = true
-		}
-	})
-
-	return containsItem
-}
-
-// fetch('/rest/hivemeta/table/' + name)
-// 	.then((response) => {
-// 		return response.json();
-// 	})
-// 	.then(columns => {
-// 		columns = Object.keys(columns).map(columnName => {
-// 			return {name: columnName, type: columns[columnName], selected: false, filter: false};
-// 		});
-//
-// 		dispatch(toggleTable(name, columns))
-// 	});
-

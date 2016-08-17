@@ -11,7 +11,8 @@ export default class TableList extends React.Component {
 		return <div>
 			<SelectField floatingLabelText="All Tables"
 			             value={this.props.currentTable}
-			             onChange={(e) => this.props.onTableClick(e.target.outerText, this.props.tables)}>
+			             onChange={(e) => this.props.onTableClick(e.target.outerText, this.props.tables)}
+			             style={{width:'360px'}}>
 				{this.props.tables.map(table =>
 						<MenuItem key={table.name} value={table.name} primaryText={table.name}/>
 				)}
