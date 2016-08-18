@@ -24,7 +24,7 @@ const style = {
 	}
 })
 export default class LoadingIndicator extends React.Component {
-	propTypes = {
+	static propTypes = {
 		isLoading: PropTypes.string,
 	};
 

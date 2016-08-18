@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import RegisterFeedback from './RegisterFeedback';
 
 export default class QueryBuilder extends React.Component {
-	propTypes = {
+	static propTypes = {
 		query: PropTypes.object,
 		onRegFeedbackDismiss: PropTypes.func.isRequired,
 		onRegisterClick: PropTypes.func.isRequired,

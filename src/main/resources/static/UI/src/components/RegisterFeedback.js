@@ -11,8 +11,8 @@ import Paper from 'material-ui/Paper';
 
 
 export default class RegisterFeedback extends React.Component {
-	propTypes = {
-		showRegisterRs: PropTypes.boolean,
+	static propTypes = {
+		showRegisterRs: PropTypes.bool,
 		onRegFeedbackDismiss: PropTypes.func.isRequired,
 		queryName: PropTypes.string,
 		queryContent: PropTypes.string

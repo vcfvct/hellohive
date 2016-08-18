@@ -5,7 +5,7 @@ import {Table, TableBody, TableRow, TableHeader, TableHeaderColumn} from 'materi
 
 
 export default class TableContent extends React.Component {
-	propTypes = {
+	static propTypes = {
 		tableModel: PropTypes.object,
 		onColumnClick: PropTypes.func.isRequired,
 		onFilterClick: PropTypes.func.isRequired

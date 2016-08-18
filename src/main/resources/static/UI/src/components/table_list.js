@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 
 export default class TableList extends React.Component {
-	propTypes = {
+	static propTypes = {
 		currentTable: PropTypes.string,
 		tables: PropTypes.object,
 		onTableClick: PropTypes.func.isRequired,
