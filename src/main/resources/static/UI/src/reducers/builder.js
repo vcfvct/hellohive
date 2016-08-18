@@ -1,4 +1,4 @@
-import {REGISTER_QUERY, FULFILLED, TOGGLE_TABLE, TOGGLE_COLUMN, TOGGLE_FILTER, REG_FEEDBACK_CLOSED} from '../actions';
+import * as actions from '../actions';
 
 const initState = {'tables': [], 'columns': [], 'filters': [], queryName: '', queryContent: '', showRegisterRs: false};
 
@@ -7,12 +7,12 @@ export function builder(state = initState, action) {
 
 	switch (action.type) {
 
-		case TOGGLE_TABLE:
+		case actions.TOGGLE_TABLE:
 		{
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
 
-		case TOGGLE_COLUMN:
+		case actions.TOGGLE_COLUMN:
 		{
 			//1.if newVal is true, add to the columns
 			//2.if new Value is false, remove from columns
@@ -38,7 +38,7 @@ export function builder(state = initState, action) {
 			}
 			return newState;
 		}
-		case TOGGLE_FILTER:
+		case actions.TOGGLE_FILTER:
 		{
 			//1. if newval is false, remove from filters
 			//2. if newVal is true, add to the filters
@@ -57,7 +57,7 @@ export function builder(state = initState, action) {
 			return newState;
 		}
 
-		case REGISTER_QUERY + FULFILLED:
+		case actions.REGISTER_QUERY + actions.FULFILLED:
 		{
 			return Object.assign({}, state, {queryName: action.queryName, queryContent: action.queryContent, showRegisterRs: true});
 		}
@@ -67,7 +67,7 @@ export function builder(state = initState, action) {
 			console.log('Query Cancelled Successfully');
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});
 		}
-		case REG_FEEDBACK_CLOSED:
+		case actions.REG_FEEDBACK_CLOSED:
 		{
 		   return {...state, showRegisterRs: false, queryName: '', queryContent: ''}
 		}

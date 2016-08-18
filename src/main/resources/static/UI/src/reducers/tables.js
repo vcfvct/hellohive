@@ -1,15 +1,15 @@
-import {TOGGLE_TABLE, FETCH_TABLES, FETCH_COLUMNS, PENDING, FULFILLED, REJECTED, TOGGLE_COLUMN, TOGGLE_FILTER, REGISTER_QUERY} from '../actions';
+import * as actions from '../actions';
 
 const initState = {currentTable: '', tables: []};
 
 export function tablesModel(state = initState, action) {
 	switch (action.type) {
 
-		case TOGGLE_TABLE: {
+		case actions.TOGGLE_TABLE: {
 			return {...state, currentTable: action.table};
 		}
 
-		case TOGGLE_COLUMN: {
+		case actions.TOGGLE_COLUMN: {
 			let newTables = state.tables.map(table => {
 				if (table.name === action.table) {
 					let newColumns = table.columns.map(column => {
@@ -30,7 +30,7 @@ export function tablesModel(state = initState, action) {
 			return {...state, tables: newTables};
 		}
 
-		case TOGGLE_FILTER:
+		case actions.TOGGLE_FILTER:
 		{
 			let newTables = state.tables.map(table => {
 				if (table.name === action.table) {
@@ -52,7 +52,7 @@ export function tablesModel(state = initState, action) {
 			return {...state, tables: newTables};
 		}
 
-		case FETCH_TABLES + FULFILLED : {
+		case actions.FETCH_TABLES + actions.FULFILLED : {
 			let initState = {};
 			let tableNames = action.payload.data;
 			initState.tables = tableNames.map((tableName, index) => {
@@ -66,7 +66,7 @@ export function tablesModel(state = initState, action) {
 			return Object.assign({}, state, initState);
 		}
 
-		case FETCH_COLUMNS + FULFILLED :
+		case actions.FETCH_COLUMNS + actions.FULFILLED :
 		{
 			let columns = action.columns;
 			let newCols = Object.keys(columns).map(columnName => {
