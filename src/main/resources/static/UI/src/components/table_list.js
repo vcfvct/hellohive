@@ -6,15 +6,15 @@ import MenuItem from 'material-ui/MenuItem';
 
 export default class TableList extends React.Component {
 	render() {
-		var targetTable = this.props.tables.find((table)=> table.name === this.props.currentTable);
+		var targetTable = this.props.tables[this.props.currentTable] ;
 
 		return <div>
 			<SelectField floatingLabelText="All Tables"
 			             value={this.props.currentTable}
-			             onChange={(e) => this.props.onTableClick(e.target.outerText, this.props.tables)}
+			             onChange={(e) => this.props.onTableClick(this.props.tables[e.target.outerText])}
 			             style={{width:'360px'}}>
-				{this.props.tables.map(table =>
-						<MenuItem key={table.name} value={table.name} primaryText={table.name}/>
+				{Object.keys(this.props.tables).map(table =>
+						<MenuItem key={table} value={table} primaryText={table}/>
 				)}
 			</SelectField>
 

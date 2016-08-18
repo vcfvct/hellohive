@@ -18,16 +18,16 @@ export const REJECTED = '_REJECTED';
 
 export const REG_FEEDBACK_CLOSED = 'REG_FEEDBACK_CLOSED';
 
-export function toggleTable(tableName, tables) {
-	let targetTable = tables.find((table) => table.name === tableName);
-	if (targetTable.columns.length > 0) {
+export function toggleTable(targetTable) {
+	if (Object.keys(targetTable.columns).length) {
 		return {
 			type: TOGGLE_TABLE,
-			table: tableName
-		}
+			table: targetTable.name
+		};
 	}
 	else {
-		return fetchColumns(tableName);
+		//when no columns, query server
+		return fetchColumns(targetTable.name);
 	}
 }
 

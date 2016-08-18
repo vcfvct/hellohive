@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import {toggleTable, toggleColumn, toggleFilter, cancel} from '../actions'
+import {toggleTable, toggleColumn, toggleFilter} from '../actions'
 import TableList from '../components/table_list'
 
 const mapStateToProps = (state) => {
@@ -11,14 +11,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onTableClick: (tableName, tables) => {
-			dispatch(toggleTable(tableName, tables))
+		onTableClick: (targetTable) => {
+			dispatch(toggleTable(targetTable))
 		},
-		onColumnClick: (table, name, newVal) => {
-			dispatch(toggleColumn(table, name, newVal))
+		onColumnClick: (tableName, colName, newVal) => {
+			dispatch(toggleColumn(tableName, colName, newVal))
 		},
-		onFilterClick: (table, name, newVal) => {
-			dispatch(toggleFilter(table, name, newVal))
+		onFilterClick: (tableName, colName, newVal) => {
+			dispatch(toggleFilter(tableName, colName, newVal))
 		}
 	}
 };

@@ -1,45 +1,44 @@
 {
   "isLoading": "hide",
   "tablesModel": {
-    "tables": [
-      {
+    "tables": {
+      "TABLE_1": {
         "name": "TABLE_1",
-        "show": false,
-        "abbrev": "t1",
-        "columns": [
-          {
+        "columns": {
+          "COL_1": {
             "name": "COL_1",
             "type": "string",
             "selected": false,
             "filter": false
-          }
-        ]
+         }
+        }
       },
-      {
+      "TABLE_2": {
         "name": "TABLE_2",
-        "show": false,
-        "abbrev": "t2",
-        "columns": [
-          {
+        "columns": {
+          "COL_1": {
             "name": "COL_1",
             "type": "string",
             "selected": false,
             "filter": false
           },
-          {
+          "COL_2": {
             "name": "COL_2",
             "type": "string",
             "selected": false,
             "filter": false
           }
-        ]
+        }
       }
-    ],
+    },
     "currentTable": ""
   },
   "query": {
     "tables": [],
     "columns": [],
-    "filters": []
+    "filters": [],
+    "queryName": "",
+    "queryContent": "",
+    "showRegisterRs": false
   }
 }

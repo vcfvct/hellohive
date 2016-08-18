@@ -1,103 +1,64 @@
 import * as actions from '../actions';
+import update from 'react-addons-update';
 
-const initState = {currentTable: '', tables: []};
+
+const initState = {currentTable: '', tables: {}};
 
 export function tablesModel(state = initState, action) {
+	function resetTable(thisTable) {
+		let newCols = {};
+		Object.keys(thisTable.columns).forEach((col) => newCols[col] = {...thisTable.columns[col], filter: false, selected: false});
+		return {...thisTable, columns:newCols};
+	}
+
 	switch (action.type) {
 
-		case actions.TOGGLE_TABLE: {
-			return {...state, currentTable: action.table};
+		case actions.TOGGLE_TABLE:
+		{
+			let newTable = resetTable(state.tables[state.currentTable]);
+			return {
+				...state,
+				currentTable: action.table,
+				tables:{...state.tables, [state.currentTable]: newTable}};
 		}
 
-		case actions.TOGGLE_COLUMN: {
-			let newTables = state.tables.map(table => {
-				if (table.name === action.table) {
-					let newColumns = table.columns.map(column => {
-						if (column.name === action.column) {
-							return Object.assign({}, column, {selected: !column.selected, filter: !column.selected ? column.filter : false})
-						}
-						else {
-							return column;
-						}
-					});
-					return Object.assign({}, table, {columns: newColumns});
-				}
-				else {
-					return table;
-				}
-			});
-
-			return {...state, tables: newTables};
+		case actions.TOGGLE_COLUMN:
+		{
+			let newCol = {...state.tables[action.table].columns[action.column], selected: action.newVal, filter: false};
+			return update(state, {tables: {[action.table]: {columns: {[action.column]: {$set: newCol}}}}});
 		}
 
 		case actions.TOGGLE_FILTER:
 		{
-			let newTables = state.tables.map(table => {
-				if (table.name === action.table) {
-					let newColumns = table.columns.map(column => {
-						if (column.name === action.column) {
-							return Object.assign({}, column, {filter: !column.filter, selected: !column.filter ? true : column.selected})
-						}
-						else {
-							return column;
-						}
-					});
-					return Object.assign({}, table, {columns: newColumns});
-				}
-				else {
-					return table;
-				}
-			});
-
-			return {...state, tables: newTables};
+			let newCol = {...state.tables[action.table].columns[action.column], selected: true, filter: action.newVal};
+			return update(state, {tables: {[action.table]: {columns: {[action.column]: {$set: newCol}}}}});
 		}
 
-		case actions.FETCH_TABLES + actions.FULFILLED : {
-			let initState = {};
+		case actions.FETCH_TABLES + actions.FULFILLED :
+		{
 			let tableNames = action.payload.data;
-			initState.tables = tableNames.map((tableName, index) => {
-				return {
-					name: tableName, show: index === 0, abbrev: tableName,
-					columns: []
-				}
+			let newTables = {};
+			tableNames.forEach((tableName) => {
+				newTables[tableName] = {name: tableName, columns: {}};
 			});
-			initState.currentTable = tableNames[0];
-
-			return Object.assign({}, state, initState);
+			return {...state, tables: newTables, currentTable: tableNames[0]};
 		}
 
 		case actions.FETCH_COLUMNS + actions.FULFILLED :
 		{
 			let columns = action.columns;
-			let newCols = Object.keys(columns).map(columnName => {
-				return {name: columnName, type: columns[columnName], selected: false, filter: false};
+			let newCols = {};
+			Object.keys(columns).forEach(columnName => {
+				newCols[columnName] = {name: columnName, type: columns[columnName], selected: false, filter: false};
 			});
-
-			let newTables = state.tables.map((table) => {
-				let result = table;
-				if (action.tableName === table.name) {
-					result = Object.assign({}, table, {columns: newCols});
-				}
-				return result;
-			});
-			return Object.assign({}, state, {tables: newTables});
+			return update(state, {tables: {[action.tableName]: {columns: {$set: newCols}}}});
 		}
 
 		//case REGISTER_QUERY+FULFILLED:
-		case 'CANCEL_QUERY': {
-			let newTables = state.tables.map(table => {
-				if (table.name === state.currentTable) {
-					let newColumns = table.columns.map(column => {
-						return Object.assign({}, column, {filter: false, selected: false})
-					});
-					return Object.assign({}, table, {columns: newColumns});
-				}
-				else {
-					return table;
-				}
-			});
-
-			return {...state, tables: newTables};
+		case 'CANCEL_QUERY':
+		{
+			let newTable = resetTable(state.tables[state.currentTable]);
+			return update(state, {tables: {[state.currentTable]: {$set: newTable}}});
 		}
 
 		default:
