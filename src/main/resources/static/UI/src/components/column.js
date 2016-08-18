@@ -3,7 +3,7 @@ import Toggle from 'material-ui/Toggle';
 import {TableRow, TableRowColumn} from 'material-ui/Table';
 
 export default class Column extends React.Component {
-	propTypes = {
+	static propTypes = {
 		tableName: PropTypes.string,
 		column: PropTypes.object,
 		onColumnClick: PropTypes.func.isRequired,
