@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import DBTableColumns from './columns';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 
 export default class TableList extends React.Component {
+	propTypes = {
+		currentTable: PropTypes.string,
+		tables: PropTypes.object,
+		onTableClick: PropTypes.func.isRequired,
+		onColumnClick: PropTypes.func.isRequired,
+		onFilterClick: PropTypes.func.isRequired
+	};
+
 	render() {
-		var targetTable = this.props.tables[this.props.currentTable] ;
+		var targetTable = this.props.tables[this.props.currentTable];
 
 		return <div>
 			<SelectField floatingLabelText="All Tables"

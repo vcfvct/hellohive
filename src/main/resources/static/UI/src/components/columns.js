@@ -1,10 +1,16 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 //import TableHeaderContent from './table_header'
 import DBTableColumn from './column';
 import {Table, TableBody, TableRow, TableHeader, TableHeaderColumn} from 'material-ui/Table';
 
 
 export default class TableContent extends React.Component {
+	propTypes = {
+		tableModel: PropTypes.object,
+		onColumnClick: PropTypes.func.isRequired,
+		onFilterClick: PropTypes.func.isRequired
+	};
+
 	render() {
 		let thisTable = this.props.tableModel;
 		return (

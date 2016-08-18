@@ -4,13 +4,20 @@
  * Date: 8/17/16
  * Time: 4:27 PM
  */
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
 
 export default class RegisterFeedback extends React.Component {
+	propTypes = {
+		showRegisterRs: PropTypes.boolean,
+		onRegFeedbackDismiss: PropTypes.func.isRequired,
+		queryName: PropTypes.string,
+		queryContent: PropTypes.string
+	};
+
 	handleClose(){
 		this.props.onRegFeedbackDismiss();
 	}

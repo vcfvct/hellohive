@@ -4,7 +4,7 @@
  * Date: 8/16/16
  * Time: 4:26 PM
  */
-import React from 'react'
+import React, { PropTypes } from 'react'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import { connect } from 'react-redux'
 import {LOAD} from '../actions';
@@ -24,6 +24,10 @@ const style = {
 	}
 })
 export default class LoadingIndicator extends React.Component {
+	propTypes = {
+		isLoading: PropTypes.string,
+	};
+
 	render() {
 		return (
 				<div className='modal' style={{display:this.props.isLoading === LOAD ? 'block':'none'}}>
