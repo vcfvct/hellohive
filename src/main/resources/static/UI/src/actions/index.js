@@ -8,6 +8,7 @@ export const FETCH_TABLES = 'FETCH_TABLES';
 export const FETCH_COLUMNS = 'FETCH_COLUMNS';
 
 export const REGISTER_QUERY = 'REGISTER_QUERY';
+export const CANCEL_QUERY = 'CANCEL_QUERY';
 
 export const LOAD = 'loading';
 export const UNLOAD = 'hide';
@@ -70,19 +71,17 @@ export function registerQuery(columns, tables, filters) {
 	return (dispatch) => {
 		dispatch({type: LOAD});
 
-
 		let queryContent = 'select ';
 		queryContent += columns.join();
 		queryContent += ' from ';
 		queryContent += tables.join();
-
 		if (filters.length > 0) {
 			let newFilters = filters.map((filter) => filter + ' = ${' + filter + '}');
 			queryContent += ' where ';
 			queryContent += newFilters.join();
 		}
-
 		let queryName = 'query-' + Math.floor(Math.random() * 10000000 + 1);
+
 		axios({
 			method: 'post',
 			url: '/rest/hql/register/name/' + queryName,
@@ -97,13 +96,13 @@ export function registerQuery(columns, tables, filters) {
 
 export function cancelQuery(tables) {
 	return {
-		type: 'CANCEL_QUERY',
+		type: CANCEL_QUERY,
 		tables: tables
 	}
 }
 
-export function onRegFeedbackDismiss(){
-	return{
+export function onRegFeedbackDismiss() {
+	return {
 		type: REG_FEEDBACK_CLOSED
 	}
 }

@@ -62,7 +62,7 @@ export function builder(state = initState, action) {
 			return Object.assign({}, state, {queryName: action.queryName, queryContent: action.queryContent, showRegisterRs: true});
 		}
 
-		case 'CANCEL_QUERY':
+		case actions.CANCEL_QUERY:
 		{
 			console.log('Query Cancelled Successfully');
 			return Object.assign({}, state, {'tables': [], 'columns': [], 'filters': []});

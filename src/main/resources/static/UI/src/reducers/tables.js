@@ -55,7 +55,7 @@ export function tablesModel(state = initState, action) {
 		}
 
 		//case REGISTER_QUERY+FULFILLED:
-		case 'CANCEL_QUERY':
+		case actions.CANCEL_QUERY:
 		{
 			let newTable = resetTable(state.tables[state.currentTable]);
 			return update(state, {tables: {[state.currentTable]: {$set: newTable}}});
